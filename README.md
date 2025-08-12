@@ -32,18 +32,18 @@ information-systems/
 ├── assets/ # Static files (images, documents, uploads) 
 ├── doc/ # Project documentation 
 ├── pages/ # HTML pages 
-│ ├── admin/ # Admin interface 
-│ └── student/ # Student dashboard 
+│  ├── admin/ # Admin interface 
+│  └── student/ # Student dashboard 
 ├── scripts/ # JavaScript files 
-│ ├── admin/ # Admin functionality 
-│ ├── auth/ # Authentication logic 
-│ ├── student/ # Student functionality 
-│ └── utils/ # Utility functions 
+│  ├── admin/ # Admin functionality 
+│  ├── auth/ # Authentication logic 
+│  ├── student/ # Student functionality 
+│  └── utils/ # Utility functions 
 └── styles/ # CSS files 
-    ├── base/ # Base styles 
-    ├── components/ # Reusable components 
-    ├── layouts/ # Page layouts 
-    └── pages/ # Page-specific styles
+│  ├── base/ # Base styles 
+│  ├── components/ # Reusable components 
+│  ├── layouts/ # Page layouts 
+│  └── pages/ # Page-specific styles
 ```
 
 
