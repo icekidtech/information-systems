@@ -1,6 +1,6 @@
 // Student Dashboard Script
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = '/api'; // Changed from http://localhost:5000/api to relative URL
 const ENDPOINTS = {
     MATERIALS: `${API_BASE_URL}/materials`,
     EVENTS: `${API_BASE_URL}/events`,
@@ -76,10 +76,7 @@ async function loadMaterials() {
     materialsError.style.display = 'none';
     materialsBody.innerHTML = `<tr><td colspan="4" class="loading">Loading materials...</td></tr>`;
     try {
-        const token = localStorage.getItem('token');
-        const res = await fetch(ENDPOINTS.MATERIALS, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
+        const res = await fetch(ENDPOINTS.MATERIALS);
         if (!res.ok) throw new Error('Failed to fetch materials');
         const materials = await res.json();
         if (!materials.length) {
@@ -92,7 +89,7 @@ async function loadMaterials() {
                 <td>${mat.type.toUpperCase()}</td>
                 <td>${mat.fileName}</td>
                 <td>
-                    <a href="${mat.filePath || `/uploads/${mat.fileName}`}" class="download-link" target="_blank" rel="noopener" aria-label="Download ${mat.fileName}">
+                    <a href="${mat.filePath}" class="download-link" target="_blank" rel="noopener" aria-label="Download ${mat.fileName}">
                         <i class="fas fa-download"></i> Download
                     </a>
                 </td>
@@ -110,10 +107,7 @@ async function loadEvents() {
     eventsError.style.display = 'none';
     eventsList.innerHTML = `<div class="loading">Loading events...</div>`;
     try {
-        const token = localStorage.getItem('token');
-        const res = await fetch(ENDPOINTS.EVENTS, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
+        const res = await fetch(ENDPOINTS.EVENTS);
         if (!res.ok) throw new Error('Failed to fetch events');
         const events = await res.json();
         if (!events.length) {
@@ -123,7 +117,7 @@ async function loadEvents() {
         eventsList.innerHTML = events.map(ev => `
             <div class="event-card" tabindex="0" aria-label="${ev.title}">
                 <div class="event-title">${ev.title}</div>
-                <div class="event-date"><i class="fas fa-calendar-alt"></i> ${formatDate(ev.eventDate)}</div>
+                <div class="event-date"><i class="fas fa-calendar-alt"></i> ${formatDate(ev.date)}</div>
                 <div class="event-desc">${ev.description || ''}</div>
             </div>
         `).join('');

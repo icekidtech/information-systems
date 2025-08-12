@@ -1,6 +1,6 @@
 // Admin Dashboard Script
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = '/api'; // Changed from http://localhost:3000/api
 const ENDPOINTS = {
     PENDING: `${API_BASE_URL}/pending-registrations`,
     CONFIRM: `${API_BASE_URL}/confirm-registration`,
