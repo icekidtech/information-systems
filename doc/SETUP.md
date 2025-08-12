@@ -5,7 +5,27 @@
 - Code editor (VS Code, Sublime Text, etc.)
 - Git (for version control)
 
-## 🚀 Quick Start
+## Database Setup
+The application uses SQL.js, a WebAssembly version of SQLite that runs in the browser. No additional server setup is required.
+
+### Initial Data
+The database is automatically initialized with:
+
+- Default admin user:
+  - Registration Number: admin/001
+  - Passcode: admin123
+  - Role: admin
+- Sample course materials
+- Sample events
+
+### Database Persistence
+The database is stored in the browser's IndexedDB. To clear the database:
+
+1. Open Developer Tools (F12)
+2. Go to Application > Storage > IndexedDB
+3. Delete the database named 'is_dept_db'
+
+## Quick Start
 1. Clone the repository:
    ```bash
    git clone https://github.com/icekidtech/information-systems.git
