@@ -39,7 +39,7 @@ information-systems/
 │  ├── auth/ # Authentication logic 
 │  ├── student/ # Student functionality 
 │  └── utils/ # Utility functions 
-└── styles/ # CSS files 
+├── styles/ # CSS files 
 │  ├── base/ # Base styles 
 │  ├── components/ # Reusable components 
 │  ├── layouts/ # Page layouts 
