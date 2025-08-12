@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Department of Information Systems</title>
+    <link rel="stylesheet" href="/styles/pages/_login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>InfoSys<span>UniUyo</span></h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="/pages/login.html" class="btn btn-outline active">Student Login</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Auth Container -->
+    <main class="auth-container">
+        <div class="container">
+            <div class="auth-box">
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="signup">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active">
+                    <h2>Student Login</h2>
+                    <div id="loginError" class="error-message"></div>
+                    
+                    <div class="form-group">
+                        <label for="loginRegNumber">Registration Number</label>
+                        <div class="input-group">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="loginRegNumber" name="regNumber" 
+                                   placeholder="e.g., 24/SC/CO/346" 
+                                   pattern="\d{2}\/[A-Z]{2}\/[A-Z]{2}\/\d{3}" 
+                                   title="Format: YY/SC/CO/XXX" required>
+                        </div>
+                        <span class="error" id="loginRegNumberError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPasscode">Passcode</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="loginPasscode" name="passcode" 
+                                   placeholder="Enter your passcode" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="error" id="loginPasscodeError"></span>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <p class="text-center">
+                            <a href="#forgot-password" id="forgotPassword">Forgot Passcode?</a>
+                        </p>
+                    </div>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signupForm" class="auth-form">
+                    <h2>Student Registration</h2>
+                    <div id="signupError" class="error-message"></div>
+                    
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="fullName" name="fullName" 
+                                   placeholder="Enter your full name" required>
+                        </div>
+                        <span class="error" id="fullNameError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regNumber">Registration Number</label>
+                        <div class="input-group">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="regNumber" name="regNumber" 
+                                   placeholder="e.g., 24/SC/CO/346" 
+                                   pattern="\d{2}\/[A-Z]{2}\/[A-Z]{2}\/\d{3}" 
+                                   title="Format: YY/SC/CO/XXX" required>
+                        </div>
+                        <span class="error" id="regNumberError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">University Email</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" 
+                                   placeholder="your.email@uniuyo.edu.ng" 
+                                   pattern="[a-z0-9._%+-]+@uniuyo\.edu\.ng$" 
+                                   title="Please use your University of Uyo email" required>
+                        </div>
+                        <span class="error" id="emailError"></span>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        <p class="text-center">
+                            Already have an account? <a href="#" id="showLogin">Login here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Department of Information Systems</h3>
+                    <p>Faculty of Computing, University of Uyo</p>
+                    <p>P.M.B. 1017, Uyo, Akwa Ibom State, Nigeria</p>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@informationsystems.uniuyo.edu.ng</p>
+                    <p><i class="fas fa-phone"></i> +234 123 456 7890</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#courses">Our Courses</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Department of Information Systems, University of Uyo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/scripts/login.js" type="module"></script>
+</body>
+</html>
