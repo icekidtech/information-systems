@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Department of Information Systems</title>
+    <link rel="stylesheet" href="/styles/pages/_student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="logo" aria-label="Department Logo">
+                <h1>InfoSys<span>UniUyo</span></h1>
+            </div>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="/" aria-current="page">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#materials">Courses</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" id="logoutBtn" class="btn btn-outline">Logout</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard-main" tabindex="-1">
+        <section class="welcome-section" aria-label="Welcome">
+            <div class="container">
+                <h2 id="welcomeMessage">Welcome, Student</h2>
+            </div>
+        </section>
+
+        <!-- Course Materials -->
+        <section id="materials" class="section" aria-labelledby="materialsTitle">
+            <div class="container">
+                <h2 class="section-title" id="materialsTitle">Available Course Materials</h2>
+                <div class="table-responsive">
+                    <table class="materials-table" aria-describedby="materialsTitle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Course Title</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">File Name</th>
+                                <th scope="col">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materialsBody">
+                            <tr>
+                                <td colspan="4" class="loading">Loading materials...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="materialsError" class="error-message" role="alert" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- Events & News -->
+        <section id="events" class="section bg-light" aria-labelledby="eventsTitle">
+            <div class="container">
+                <h2 class="section-title" id="eventsTitle">Upcoming Events & News</h2>
+                <div id="eventsList" class="events-list" aria-live="polite">
+                    <div class="loading">Loading events...</div>
+                </div>
+                <div id="eventsError" class="error-message" role="alert" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- Change Passcode -->
+        <section id="changePasscode" class="section" aria-labelledby="changePasscodeTitle">
+            <div class="container">
+                <h2 class="section-title" id="changePasscodeTitle">Change Passcode</h2>
+                <form id="passcodeForm" class="passcode-form" autocomplete="off" aria-describedby="passcodeFormDesc">
+                    <p id="passcodeFormDesc" class="form-desc">Update your passcode for account security.</p>
+                    <div class="form-group">
+                        <label for="currentPasscode">Current Passcode</label>
+                        <div class="input-group">
+                            <input type="password" id="currentPasscode" name="currentPasscode" required aria-required="true" autocomplete="current-password">
+                            <button type="button" class="toggle-password" aria-label="Show/Hide passcode"><i class="fas fa-eye"></i></button>
+                        </div>
+                        <span class="error" id="currentPasscodeError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPasscode">New Passcode</label>
+                        <div class="input-group">
+                            <input type="password" id="newPasscode" name="newPasscode" required aria-required="true" minlength="6" autocomplete="new-password">
+                            <button type="button" class="toggle-password" aria-label="Show/Hide passcode"><i class="fas fa-eye"></i></button>
+                        </div>
+                        <span class="error" id="newPasscodeError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPasscode">Confirm New Passcode</label>
+                        <div class="input-group">
+                            <input type="password" id="confirmPasscode" name="confirmPasscode" required aria-required="true" minlength="6" autocomplete="new-password">
+                            <button type="button" class="toggle-password" aria-label="Show/Hide passcode"><i class="fas fa-eye"></i></button>
+                        </div>
+                        <span class="error" id="confirmPasscodeError"></span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Change Passcode</button>
+                    </div>
+                    <div id="passcodeFormMessage" class="form-message" aria-live="polite"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Department of Information Systems</h3>
+                    <p>Faculty of Computing, University of Uyo</p>
+                    <p>P.M.B. 1017, Uyo, Akwa Ibom State, Nigeria</p>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@informationsystems.edu.org</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#materials">Our Courses</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Department of Information Systems, Faculty of Computing, University of Uyo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/scripts/student/dashboard.js" type="module"></script>
+</body>
+</html>
