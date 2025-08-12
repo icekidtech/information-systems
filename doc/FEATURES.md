@@ -66,6 +66,24 @@
 - Data encryption in storage
 - Protection against XSS and injection
 
+## Data Management
+### SQL.js Database
+- Client-side SQLite database using WebAssembly
+- Tables: users, materials, events
+- Automatic schema creation and seeding
+- Data persistence across page reloads
+
+### User Management
+- Student registration with approval workflow
+- Admin approval with passcode generation
+- Secure login with regNumber and passcode
+- Passcode change functionality
+
+### File Management
+- Course materials storage (PDFs, PPTX, etc.)
+- Event management with optional images
+- File metadata storage (name, type, upload date)
+
 ## 🚀 Future Enhancements
 - Offline access to materials
 - Push notifications for events
