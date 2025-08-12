@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Department of Information Systems</title>
+    <link rel="stylesheet" href="/styles/admin/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="logo" aria-label="Department Logo">
+                <h1>InfoSys<span>UniUyo</span></h1>
+            </div>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="/" aria-current="page">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#materials">Courses</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" id="logoutBtn" class="btn btn-outline">Logout</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard-main" tabindex="-1">
+        <section class="welcome-section" aria-label="Welcome">
+            <div class="container">
+                <h2 id="welcomeMessage">Welcome, Admin</h2>
+            </div>
+        </section>
+
+        <!-- Pending Registrations -->
+        <section id="pendingRegistrations" class="section" aria-labelledby="pendingTitle">
+            <div class="container">
+                <h2 class="section-title" id="pendingTitle">Pending Registrations</h2>
+                <div class="table-responsive">
+                    <table class="pending-table" aria-describedby="pendingTitle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Reg Number</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingBody">
+                            <tr>
+                                <td colspan="4" class="loading">Loading pending registrations...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="pendingError" class="error-message" role="alert" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- Upload Course Materials -->
+        <section id="uploadMaterials" class="section" aria-labelledby="uploadTitle">
+            <div class="container">
+                <h2 class="section-title" id="uploadTitle">Upload Course Materials</h2>
+                <form id="materialForm" class="upload-form" enctype="multipart/form-data" aria-describedby="materialFormDesc">
+                    <p id="materialFormDesc" class="form-desc">Upload new course materials for students.</p>
+                    <div class="form-group">
+                        <label for="courseTitle">Course Title</label>
+                        <input type="text" id="courseTitle" name="courseTitle" required aria-required="true" maxlength="100">
+                        <span class="error" id="courseTitleError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="materialType">Material Type</label>
+                        <select id="materialType" name="materialType" required aria-required="true">
+                            <option value="">Select type</option>
+                            <option value="pdf">PDF</option>
+                            <option value="pptx">PowerPoint</option>
+                            <option value="docx">Word Document</option>
+                            <option value="video">Video</option>
+                        </select>
+                        <span class="error" id="materialTypeError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="materialFile">File Upload</label>
+                        <input type="file" id="materialFile" name="materialFile" required aria-required="true" accept=".pdf,.pptx,.docx,.mp4,.avi,.mov">
+                        <span class="error" id="materialFileError"></span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Upload Material</button>
+                    </div>
+                    <div id="materialFormMessage" class="form-message" aria-live="polite"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Post News & Events -->
+        <section id="postEvents" class="section bg-light" aria-labelledby="eventTitle">
+            <div class="container">
+                <h2 class="section-title" id="eventTitle">Post News & Upcoming Events</h2>
+                <form id="eventForm" class="event-form" enctype="multipart/form-data" aria-describedby="eventFormDesc">
+                    <p id="eventFormDesc" class="form-desc">Announce new events or news for the department.</p>
+                    <div class="form-group">
+                        <label for="eventTitleInput">Event Title</label>
+                        <input type="text" id="eventTitleInput" name="eventTitle" required aria-required="true" maxlength="100">
+                        <span class="error" id="eventTitleError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Event Date</label>
+                        <input type="date" id="eventDate" name="eventDate" required aria-required="true">
+                        <span class="error" id="eventDateError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDesc">Description</label>
+                        <textarea id="eventDesc" name="eventDesc" rows="3" required aria-required="true" maxlength="500"></textarea>
+                        <span class="error" id="eventDescError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventImage">Image (optional)</label>
+                        <input type="file" id="eventImage" name="eventImage" accept="image/*">
+                        <span class="error" id="eventImageError"></span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Post Event</button>
+                    </div>
+                    <div id="eventFormMessage" class="form-message" aria-live="polite"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Uploaded Materials -->
+        <section id="materials" class="section" aria-labelledby="materialsTitle">
+            <div class="container">
+                <h2 class="section-title" id="materialsTitle">Uploaded Materials</h2>
+                <div class="table-responsive">
+                    <table class="materials-table" aria-describedby="materialsTitle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Course Title</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">File Name</th>
+                                <th scope="col">Uploaded</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materialsBody">
+                            <tr>
+                                <td colspan="5" class="loading">Loading materials...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="materialsError" class="error-message" role="alert" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- Recently Posted Events -->
+        <section id="events" class="section bg-light" aria-labelledby="eventsTitle">
+            <div class="container">
+                <h2 class="section-title" id="eventsTitle">Recently Posted Events</h2>
+                <div class="table-responsive">
+                    <table class="events-table" aria-describedby="eventsTitle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventsBody">
+                            <tr>
+                                <td colspan="5" class="loading">Loading events...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="eventsError" class="error-message" role="alert" aria-live="polite"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Department of Information Systems</h3>
+                    <p>Faculty of Computing, University of Uyo</p>
+                    <p>P.M.B. 1017, Uyo, Akwa Ibom State, Nigeria</p>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@informationsystems.edu.org</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#materials">Our Courses</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Department of Information Systems, University of Uyo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="/scripts/admin/admin.js" type="module"></script>
+</body>
+</html>
