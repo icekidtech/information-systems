@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Department of Information Systems</title>
+    <meta name="description" content="Explore our comprehensive Information Systems courses at the University of Uyo - from undergraduate to graduate programs.">
+    <link rel="stylesheet" href="/styles/page/courses.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="logo" aria-label="Department Logo">
+                <h1>InfoSys<span>UniUyo</span></h1>
+                <p class="logo-subtitle">Information Systems Department</p>
+            </div>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/about.html">About</a></li>
+                    <li><a href="/pages/courses.html" class="active" aria-current="page">Courses</a></li>
+                    <li><a href="/#events">Events</a></li>
+                    <li><a href="/pages/contact.html">Contact</a></li>
+                    <li class="auth-links">
+                        <a href="/pages/login.html" class="btn btn-outline" id="loginLink">Student Login</a>
+                        <a href="#" class="btn btn-danger" id="logoutBtn" style="display: none;">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content" role="main">
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 id="hero-title">Our Courses</h1>
+                    <p class="hero-subtitle">Comprehensive Information Systems Education for the Digital Age</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Filters -->
+        <section class="filters-section section" aria-labelledby="filters-title">
+            <div class="container">
+                <h2 id="filters-title" class="sr-only">Course Filters</h2>
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="levelFilter" class="filter-label">Level:</label>
+                        <select id="levelFilter" class="filter-select" aria-label="Filter by course level">
+                            <option value="">All Levels</option>
+                            <option value="100">100 Level</option>
+                            <option value="200">200 Level</option>
+                            <option value="300">300 Level</option>
+                            <option value="400">400 Level</option>
+                            <option value="500">500 Level (Postgraduate)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="typeFilter" class="filter-label">Type:</label>
+                        <select id="typeFilter" class="filter-select" aria-label="Filter by course type">
+                            <option value="">All Types</option>
+                            <option value="core">Core Courses</option>
+                            <option value="elective">Elective Courses</option>
+                            <option value="general">General Studies</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="searchFilter" class="filter-label">Search:</label>
+                        <input type="text" id="searchFilter" class="filter-input" placeholder="Search courses..." aria-label="Search courses">
+                    </div>
+                    <button id="clearFilters" class="btn btn-outline">Clear Filters</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Materials Section -->
+        <section class="courses-section section" aria-labelledby="courses-title">
+            <div class="container">
+                <h2 id="courses-title" class="section-title">Available Courses</h2>
+                
+                <!-- Loading State -->
+                <div id="coursesLoading" class="loading-container" aria-live="polite">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                    </div>
+                    <p>Loading courses...</p>
+                </div>
+
+                <!-- Error State -->
+                <div id="coursesError" class="error-container" style="display: none;" role="alert" aria-live="polite">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                    </div>
+                    <h3>Unable to Load Courses</h3>
+                    <p>We're having trouble loading the course information. Please try again later.</p>
+                    <button id="retryCoursesBtn" class="btn btn-primary">Try Again</button>
+                </div>
+
+                <!-- Courses Grid -->
+                <div id="coursesGrid" class="courses-grid" style="display: none;">
+                    <!-- Courses will be populated dynamically -->
+                </div>
+
+                <!-- No Results -->
+                <div id="noResults" class="no-results" style="display: none;" aria-live="polite">
+                    <div class="no-results-icon">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </div>
+                    <h3>No Courses Found</h3>
+                    <p>No courses match your current filters. Try adjusting your search criteria.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Information -->
+        <section class="course-info-section section bg-light" aria-labelledby="info-title">
+            <div class="container">
+                <h2 id="info-title" class="section-title">Course Information</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                        </div>
+                        <h3>Course Duration</h3>
+                        <p>Most courses are semester-based (15 weeks) with a combination of lectures, tutorials, and practical sessions.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                        </div>
+                        <h3>Class Sizes</h3>
+                        <p>We maintain optimal student-to-faculty ratios to ensure personalized attention and effective learning.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-laptop" aria-hidden="true"></i>
+                        </div>
+                        <h3>Learning Resources</h3>
+                        <p>Access to modern computer labs, online materials, and industry-standard software for hands-on learning.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-certificate" aria-hidden="true"></i>
+                        </div>
+                        <h3>Assessment</h3>
+                        <p>Continuous assessment through assignments, projects, tests, and examinations to ensure comprehensive evaluation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prerequisites Information -->
+        <section class="prerequisites-section section" aria-labelledby="prereq-title">
+            <div class="container">
+                <h2 id="prereq-title" class="section-title">Prerequisites & Requirements</h2>
+                <div class="prereq-content">
+                    <div class="prereq-general">
+                        <h3>General Requirements</h3>
+                        <ul>
+                            <li>Minimum of 5 O'Level credits including Mathematics and English Language</li>
+                            <li>JAMB UTME score meeting university cutoff requirements</li>
+                            <li>Post-UTME screening examination</li>
+                            <li>Basic computer literacy (recommended)</li>
+                        </ul>
+                    </div>
+                    <div class="prereq-specific">
+                        <h3>Course-Specific Prerequisites</h3>
+                        <div class="prereq-list">
+                            <div class="prereq-item">
+                                <h4>200 Level Courses</h4>
+                                <p>Successful completion of all 100 level courses with minimum CGPA of 2.0</p>
+                            </div>
+                            <div class="prereq-item">
+                                <h4>300 Level Courses</h4>
+                                <p>Completion of prerequisite 200 level courses in relevant areas</p>
+                            </div>
+                            <div class="prereq-item">
+                                <h4>400 Level Courses</h4>
+                                <p>Advanced courses requiring completion of foundational courses and project proposal</p>
+                            </div>
+                            <div class="prereq-item">
+                                <h4>Postgraduate Courses</h4>
+                                <p>Bachelor's degree in related field with minimum second class lower division</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Outcomes -->
+        <section class="careers-section section bg-light" aria-labelledby="careers-title">
+            <div class="container">
+                <h2 id="careers-title" class="section-title">Career Outcomes</h2>
+                <div class="careers-intro">
+                    <p>Our graduates are well-prepared for diverse career opportunities in the rapidly evolving field of Information Systems.</p>
+                </div>
+                <div class="careers-grid">
+                    <div class="career-category">
+                        <h3>Technology Roles</h3>
+                        <ul>
+                            <li>Systems Analyst</li>
+                            <li>Database Administrator</li>
+                            <li>IT Project Manager</li>
+                            <li>Business Intelligence Analyst</li>
+                            <li>Cybersecurity Specialist</li>
+                        </ul>
+                    </div>
+                    <div class="career-category">
+                        <h3>Business Roles</h3>
+                        <ul>
+                            <li>Business Analyst</li>
+                            <li>IT Consultant</li>
+                            <li>Digital Transformation Manager</li>
+                            <li>Process Improvement Specialist</li>
+                            <li>Technology Strategy Advisor</li>
+                        </ul>
+                    </div>
+                    <div class="career-category">
+                        <h3>Entrepreneurship</h3>
+                        <ul>
+                            <li>Tech Startup Founder</li>
+                            <li>IT Solutions Provider</li>
+                            <li>Digital Marketing Agency Owner</li>
+                            <li>Software Development Company</li>
+                            <li>E-commerce Platform Developer</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Department of Information Systems</h3>
+                    <p>Faculty of Computing, University of Uyo</p>
+                    <p>P.M.B. 1017, Uyo, Akwa Ibom State, Nigeria</p>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Information</h3>
+                    <p>
+                        <i class="fas fa-envelope" aria-hidden="true"></i> 
+                        <a href="mailto:info@informationsystems.edu.org">info@informationsystems.edu.org</a>
+                    </p>
+                    <p>
+                        <i class="fas fa-phone" aria-hidden="true"></i> 
+                        <a href="tel:+2341234567890">+234 123 456 7890</a>
+                    </p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook" rel="noopener noreferrer">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter" rel="noopener noreferrer">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="LinkedIn" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram" rel="noopener noreferrer">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/pages/about.html">About Us</a></li>
+                        <li><a href="/pages/courses.html">Our Courses</a></li>
+                        <li><a href="/#events">Events</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Department of Information Systems, Faculty of Computing, University of Uyo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/scripts/courses.js" type="module"></script>
+</body>
+</html>
