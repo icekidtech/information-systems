@@ -3,133 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Department of Information Systems</title>
-    <meta name="description" content="Admin login portal for the Department of Information Systems, University of Uyo">
-    <link rel="stylesheet" href="/styles/pages/admin.css">
+    <title>Login - Department of Information Systems</title>
+    <link rel="stylesheet" href="/styles/pages/_login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- Header -->
-    <header class="header" role="banner">
+    <header class="header">
         <div class="container">
-            <div class="logo" aria-label="Department Logo">
+            <div class="logo">
                 <h1>InfoSys<span>UniUyo</span></h1>
-                <p class="logo-subtitle">Admin Portal</p>
             </div>
-            <nav class="main-nav" aria-label="Main Navigation">
+            <nav class="main-nav">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/#about">About</a></li>
-                    <li><a href="/#courses">Courses</a></li>
-                    <li><a href="/#events">Events</a></li>
-                    <li><a href="/#contact">Contact</a></li>
-                    <li><a href="/pages/admin/login.html" class="active" aria-current="page">Admin Login</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="/pages/login.html" class="btn btn-outline active">Student Login</a></li>
                 </ul>
             </nav>
-            <button class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="auth-main" role="main">
+    <!-- Auth Container -->
+    <main class="auth-container">
         <div class="container">
-            <div class="auth-wrapper">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <div class="auth-icon">
-                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+            <div class="auth-box">
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="signup">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active">
+                    <h2>Student Login</h2>
+                    <div id="loginError" class="error-message"></div>
+                    
+                    <div class="form-group">
+                        <label for="loginRegNumber">Registration Number</label>
+                        <div class="input-group">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="loginRegNumber" name="regNumber" 
+                                   placeholder="e.g., 24/SC/CO/346" 
+                                   pattern="\d{2}\/[A-Z]{2}\/[A-Z]{2}\/\d{3}" 
+                                   title="Format: YY/SC/CO/XXX" required>
                         </div>
-                        <h1>Admin Login</h1>
-                        <p class="auth-subtitle">Access the administrative dashboard</p>
+                        <span class="error" id="loginRegNumberError"></span>
                     </div>
-
-                    <!-- Login Form -->
-                    <form id="adminLoginForm" class="auth-form" novalidate>
-                        <div class="form-group">
-                            <label for="regNumber" class="form-label">
-                                <i class="fas fa-id-badge" aria-hidden="true"></i>
-                                Registration Number
-                            </label>
-                            <input 
-                                type="text" 
-                                id="regNumber" 
-                                name="regNumber" 
-                                class="form-input" 
-                                placeholder="e.g., 24/is/ad/001"
-                                autocomplete="username"
-                                aria-describedby="regNumberError regNumberHelp"
-                                required
-                            >
-                            <div id="regNumberHelp" class="form-help">
-                                Enter your admin registration number (format: YY/is/ad/XXX)
-                            </div>
-                            <div id="regNumberError" class="form-error" role="alert" aria-live="polite"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="passcode" class="form-label">
-                                <i class="fas fa-key" aria-hidden="true"></i>
-                                Passcode
-                            </label>
-                            <div class="input-group">
-                                <input 
-                                    type="password" 
-                                    id="passcode" 
-                                    name="passcode" 
-                                    class="form-input" 
-                                    placeholder="Enter your passcode"
-                                    autocomplete="current-password"
-                                    aria-describedby="passcodeError"
-                                    required
-                                >
-                                <button type="button" class="toggle-password" aria-label="Toggle passcode visibility">
-                                    <i class="fas fa-eye" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div id="passcodeError" class="form-error" role="alert" aria-live="polite"></div>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
-                                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
-                                <span class="btn-text">Login to Dashboard</span>
-                                <span class="btn-spinner" aria-hidden="true">
-                                    <i class="fas fa-spinner fa-spin"></i>
-                                </span>
+                    
+                    <div class="form-group">
+                        <label for="loginPasscode">Passcode</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="loginPasscode" name="passcode" 
+                                   placeholder="Enter your passcode" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
                             </button>
                         </div>
-
-                        <!-- Form Messages -->
-                        <div id="formMessage" class="form-message" role="alert" aria-live="polite"></div>
-                    </form>
-
-                    <!-- Additional Info -->
-                    <div class="auth-footer">
-                        <div class="auth-links">
-                            <a href="/pages/login.html" class="link-secondary">
-                                <i class="fas fa-user-graduate" aria-hidden="true"></i>
-                                Student Login
-                            </a>
-                            <a href="/#contact" class="link-secondary">
-                                <i class="fas fa-question-circle" aria-hidden="true"></i>
-                                Need Help?
-                            </a>
-                        </div>
-                        <div class="security-notice">
-                            <i class="fas fa-info-circle" aria-hidden="true"></i>
-                            <span>This is a secure administrative area. Unauthorized access is prohibited.</span>
-                        </div>
+                        <span class="error" id="loginPasscodeError"></span>
                     </div>
-                </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <p class="text-center">
+                            <a href="#forgot-password" id="forgotPassword">Forgot Passcode?</a>
+                        </p>
+                    </div>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signupForm" class="auth-form">
+                    <h2>Student Registration</h2>
+                    <div id="signupError" class="error-message"></div>
+                    
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="fullName" name="fullName" 
+                                   placeholder="Enter your full name" required>
+                        </div>
+                        <span class="error" id="fullNameError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regNumber">Registration Number</label>
+                        <div class="input-group">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="regNumber" name="regNumber" 
+                                   placeholder="e.g., 24/SC/CO/346" 
+                                   pattern="\d{2}\/[A-Z]{2}\/[A-Z]{2}\/\d{3}" 
+                                   title="Format: YY/SC/CO/XXX" required>
+                        </div>
+                        <span class="error" id="regNumberError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" 
+                                   placeholder="your.email@gmail.com" 
+                                   title="Enter a valid email address" required>
+                        </div>
+                        <span class="error" id="emailError"></span>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        <p class="text-center">
+                            Already have an account? <a href="#" id="showLogin">Login here</a>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="footer" role="contentinfo">
+    <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-about">
@@ -139,46 +138,32 @@
                 </div>
                 <div class="footer-contact">
                     <h3>Contact Us</h3>
-                    <p>
-                        <i class="fas fa-envelope" aria-hidden="true"></i> 
-                        <a href="mailto:info@informationsystems.edu.org">info@informationsystems.edu.org</a>
-                    </p>
-                    <p>
-                        <i class="fas fa-phone" aria-hidden="true"></i> 
-                        <a href="tel:+2341234567890">+234 123 456 7890</a>
-                    </p>
+                    <p><i class="fas fa-envelope"></i> info@informationsystems.edu.org</p>
+                    <p><i class="fas fa-phone"></i> +234 123 456 7890</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook" rel="noopener noreferrer">
-                            <i class="fab fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" aria-label="Twitter" rel="noopener noreferrer">
-                            <i class="fab fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" aria-label="LinkedIn" rel="noopener noreferrer">
-                            <i class="fab fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" aria-label="Instagram" rel="noopener noreferrer">
-                            <i class="fab fa-instagram" aria-hidden="true"></i>
-                        </a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="/#about">About Us</a></li>
-                        <li><a href="/#courses">Our Courses</a></li>
-                        <li><a href="/#events">Events</a></li>
-                        <li><a href="/#contact">Contact</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#courses">Our Courses</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Department of Information Systems, Faculty of Computing, University of Uyo. All rights reserved.</p>
+                <p>&copy; 2025 Department of Information Systems, University of Uyo. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="/scripts/admin/auth.js" type="module"></script>
+    <script src="/scripts/login.js" type="module"></script>
 </body>
 </html>

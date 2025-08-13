@@ -65,43 +65,40 @@ const sendPasscodeEmail = async (recipientEmail, studentName, regNumber, passcod
                             padding: 20px;
                         }
                         .header {
-                            background-color: #007BFF;
+                            background: linear-gradient(135deg, #2563eb, #7c3aed);
                             color: white;
+                            padding: 30px;
                             text-align: center;
-                            padding: 20px;
-                            margin-bottom: 20px;
+                            border-radius: 10px 10px 0 0;
                         }
                         .content {
-                            background-color: #f8f9fa;
-                            padding: 20px;
-                            border-radius: 5px;
+                            background: #f8f9fa;
+                            padding: 30px;
+                            border-radius: 0 0 10px 10px;
                         }
                         .passcode {
-                            background-color: #28A745;
+                            background: #2563eb;
                             color: white;
+                            padding: 15px;
+                            text-align: center;
                             font-size: 24px;
                             font-weight: bold;
-                            text-align: center;
-                            padding: 15px;
-                            margin: 20px 0;
                             border-radius: 5px;
-                            letter-spacing: 2px;
+                            margin: 15px 0;
+                        }
+                        .warning {
+                            background: #fff3cd;
+                            border: 1px solid #ffeaa7;
+                            color: #856404;
+                            padding: 15px;
+                            border-radius: 5px;
+                            margin: 15px 0;
                         }
                         .footer {
                             text-align: center;
-                            margin-top: 20px;
-                            padding-top: 20px;
-                            border-top: 1px solid #ddd;
+                            padding: 20px;
+                            font-size: 12px;
                             color: #666;
-                            font-size: 14px;
-                        }
-                        .warning {
-                            background-color: #fff3cd;
-                            border: 1px solid #ffeaa7;
-                            color: #856404;
-                            padding: 10px;
-                            border-radius: 5px;
-                            margin: 15px 0;
                         }
                     </style>
                 </head>
@@ -141,7 +138,7 @@ const sendPasscodeEmail = async (recipientEmail, studentName, regNumber, passcod
                         
                         <p><strong>How to Access Your Account:</strong></p>
                         <ol>
-                            <li>Visit the student portal at: <a href="http://localhost:3000/pages/login.html">Student Login</a></li>
+                            <li>Visit the student portal at: <a href="http://localhost:5000/pages/login.html">Student Login</a></li>
                             <li>Enter your registration number: <strong>${regNumber}</strong></li>
                             <li>Enter your passcode: <strong>${passcode}</strong></li>
                             <li>Click "Login" to access your dashboard</li>
@@ -168,7 +165,7 @@ const sendPasscodeEmail = async (recipientEmail, studentName, regNumber, passcod
                     <div class="footer">
                         <p>Department of Information Systems | Faculty of Computing | University of Uyo</p>
                         <p>P.M.B. 1017, Uyo, Akwa Ibom State, Nigeria</p>
-                        <p>Email: info@informationsystems.uniuyo.edu.ng</p>
+                        <p>Email: info@informationsystems.edu.org</p>
                         <p><em>This is an automated message. Please do not reply to this email.</em></p>
                     </div>
                 </body>
@@ -244,7 +241,7 @@ const sendAdminNotification = async (studentData) => {
                 name: 'Information Systems Portal',
                 address: EMAIL_CONFIG.auth.user
             },
-            to: 'admin@informationsystems.uniuyo.edu.ng', // Admin email
+            to: 'admin@informationsystems.edu.org', // Admin email
             subject: 'New Student Registration - Pending Approval',
             html: `
                 <h2>New Student Registration</h2>

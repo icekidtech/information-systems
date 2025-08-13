@@ -28,21 +28,17 @@ This platform serves as the official digital presence for the Department of Info
 ## 📁 Project Structure
 
 ```
-information-systems/ 
+information-systems/
+├── backend/ # Server, routes etc configuration files
 ├── assets/ # Static files (images, documents, uploads) 
 ├── doc/ # Project documentation 
 ├── pages/ # HTML pages 
 │  ├── admin/ # Admin interface 
 │  └── student/ # Student dashboard 
 ├── scripts/ # JavaScript files 
-│  ├── admin/ # Admin functionality 
-│  ├── auth/ # Authentication logic 
-│  ├── student/ # Student functionality 
-│  └── utils/ # Utility functions 
-├── styles/ # CSS files 
-│  ├── base/ # Base styles 
-│  ├── components/ # Reusable components 
-│  ├── layouts/ # Page layouts 
+│  ├── admin/ # Admin functionality  
+│  └── student/ # Student functionality
+├── styles/ # CSS files  
 │  └── pages/ # Page-specific styles
 ```
 

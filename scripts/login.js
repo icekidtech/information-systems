@@ -1,78 +1,68 @@
+// Student Login and Registration Script
+
+// Configuration
+const API_BASE_URL = '/api';
+const ENDPOINTS = {
+    LOGIN: `${API_BASE_URL}/login`,
+    SIGNUP: `${API_BASE_URL}/signup`
+};
+
 // DOM Elements
 const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
-const loginTab = document.querySelector('[data-tab="login"]');
-const signupTab = document.querySelector('[data-tab="signup"]');
+const tabBtns = document.querySelectorAll('.tab-btn');
+const authForms = document.querySelectorAll('.auth-form');
 const showLoginLink = document.getElementById('showLogin');
 const forgotPasswordLink = document.getElementById('forgotPassword');
 const togglePasswordBtns = document.querySelectorAll('.toggle-password');
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const mainNav = document.querySelector('.main-nav');
 
-// API Endpoints
-const API_BASE_URL = 'http://localhost:3000/api';
-const ENDPOINTS = {
-    LOGIN: `${API_BASE_URL}/login`,
-    SIGNUP: `${API_BASE_URL}/signup`,
-    FORGOT_PASSWORD: `${API_BASE_URL}/forgot-password`
-};
+// State
+let currentTab = 'login';
 
-// Toggle between login and signup forms
-const toggleForms = (showLogin) => {
-    if (showLogin) {
-        loginForm.classList.add('active');
-        signupForm.classList.remove('active');
-        loginTab.classList.add('active');
-        signupTab.classList.remove('active');
-    } else {
-        signupForm.classList.add('active');
-        loginForm.classList.remove('active');
-        signupTab.classList.add('active');
-        loginTab.classList.remove('active');
+// Utility Functions
+const showError = (id, message) => {
+    const errorElement = document.getElementById(id);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
     }
 };
 
-// Toggle password visibility
-const togglePasswordVisibility = (input, button) => {
-    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-    input.setAttribute('type', type);
-    const icon = button.querySelector('i');
-    icon.classList.toggle('fa-eye');
-    icon.classList.toggle('fa-eye-slash');
-};
-
-// Show error message
-const showError = (elementId, message) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-        element.textContent = message;
-        element.style.display = 'block';
-    }
-};
-
-// Clear error messages
 const clearErrors = (formId) => {
     const form = document.getElementById(formId);
     if (form) {
         const errors = form.querySelectorAll('.error');
         errors.forEach(error => {
             error.textContent = '';
+            error.style.display = 'none';
         });
+        
         const errorMessage = form.querySelector('.error-message');
         if (errorMessage) {
+            errorMessage.textContent = '';
             errorMessage.style.display = 'none';
         }
     }
 };
 
-// Validate registration number format (YY/SC/CO/XXX)
+// Validation Functions
 const validateRegNumber = (regNumber) => {
-    const regex = /^\d{2}\/[A-Z]{2}\/[A-Z]{2}\/\d{3}$/;
-    return regex.test(regNumber);
+    if (!regNumber || typeof regNumber !== 'string') return false;
+    
+    // Updated pattern to be more flexible with departments and codes
+    const regex = /^\d{2}\/[A-Z]{2}\/[A-Z]{2}\/\d{3}$/i;
+    return regex.test(regNumber.trim());
 };
 
-// Validate email format
+// Updated email validation - now accepts all valid email formats
 const validateEmail = (email) => {
-    const regex = /^[a-z0-9._%+-]+@uniuyo\.edu\.ng$/i;
-    return regex.test(email);
+    if (!email || typeof email !== 'string') return false;
+    
+    // Standard email validation regex
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email.trim());
 };
 
 // Handle form submission
@@ -101,6 +91,9 @@ const handleSubmit = async (e) => {
         if (!data.passcode.trim()) {
             showError('loginPasscodeError', 'Passcode is required');
             isValid = false;
+        } else if (data.passcode.length < 6) {
+            showError('loginPasscodeError', 'Passcode must be at least 6 characters');
+            isValid = false;
         }
         
         if (isValid) {
@@ -110,23 +103,27 @@ const handleSubmit = async (e) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({
+                        regNumber: data.regNumber.toLowerCase(),
+                        passcode: data.passcode
+                    })
                 });
                 
                 const result = await response.json();
                 
                 if (response.ok) {
-                    // Store the token and redirect based on role
-                    localStorage.setItem('token', result.token);
+                    // Store user data and redirect
                     localStorage.setItem('user', JSON.stringify(result.user));
+                    localStorage.setItem('token', result.token || 'student-session');
                     
+                    // Redirect based on user role
                     if (result.user.role === 'admin') {
                         window.location.href = '/pages/admin/dashboard.html';
                     } else {
                         window.location.href = '/pages/student/dashboard.html';
                     }
                 } else {
-                    const errorMessage = result.message || 'Login failed. Please try again.';
+                    const errorMessage = result.message || result.error || 'Login failed. Please check your credentials.';
                     const errorElement = document.getElementById('loginError');
                     if (errorElement) {
                         errorElement.textContent = errorMessage;
@@ -137,19 +134,21 @@ const handleSubmit = async (e) => {
                 console.error('Login error:', error);
                 const errorElement = document.getElementById('loginError');
                 if (errorElement) {
-                    errorElement.textContent = 'An error occurred. Please try again later.';
+                    errorElement.textContent = 'Network error. Please try again.';
                     errorElement.style.display = 'block';
                 }
             }
         }
-    } else if (formId === 'signupForm') {
-        // Validate full name
+    } 
+    else if (formId === 'signupForm') {
         if (!data.fullName.trim()) {
             showError('fullNameError', 'Full name is required');
             isValid = false;
+        } else if (data.fullName.trim().length < 2) {
+            showError('fullNameError', 'Name must be at least 2 characters');
+            isValid = false;
         }
         
-        // Validate registration number
         if (!data.regNumber.trim()) {
             showError('regNumberError', 'Registration number is required');
             isValid = false;
@@ -158,12 +157,11 @@ const handleSubmit = async (e) => {
             isValid = false;
         }
         
-        // Validate email
         if (!data.email.trim()) {
-            showError('emailError', 'Email is required');
+            showError('emailError', 'Email address is required');
             isValid = false;
         } else if (!validateEmail(data.email)) {
-            showError('emailError', 'Please use your University of Uyo email');
+            showError('emailError', 'Please enter a valid email address');
             isValid = false;
         }
         
@@ -174,7 +172,11 @@ const handleSubmit = async (e) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({
+                        name: data.fullName.trim(),
+                        regNumber: data.regNumber.toLowerCase(),
+                        email: data.email.toLowerCase()
+                    })
                 });
                 
                 const result = await response.json();
@@ -185,7 +187,7 @@ const handleSubmit = async (e) => {
                     toggleForms(true);
                     signupForm.reset();
                 } else {
-                    const errorMessage = result.message || 'Registration failed. Please try again.';
+                    const errorMessage = result.message || result.error || 'Registration failed. Please try again.';
                     const errorElement = document.getElementById('signupError');
                     if (errorElement) {
                         errorElement.textContent = errorMessage;
@@ -196,7 +198,7 @@ const handleSubmit = async (e) => {
                 console.error('Signup error:', error);
                 const errorElement = document.getElementById('signupError');
                 if (errorElement) {
-                    errorElement.textContent = 'An error occurred. Please try again later.';
+                    errorElement.textContent = 'Network error. Please try again.';
                     errorElement.style.display = 'block';
                 }
             }
@@ -204,57 +206,154 @@ const handleSubmit = async (e) => {
     }
 };
 
+// Tab switching functionality
+const switchTab = (tabName) => {
+    currentTab = tabName;
+    
+    // Update tab buttons
+    tabBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabName);
+    });
+    
+    // Update forms
+    authForms.forEach(form => {
+        form.classList.toggle('active', form.id === `${tabName}Form`);
+    });
+    
+    // Clear any existing errors
+    clearErrors(`${tabName}Form`);
+};
+
+// Toggle between login and signup forms
+const toggleForms = (showLogin = true) => {
+    switchTab(showLogin ? 'login' : 'signup');
+};
+
+// Toggle password visibility
+const togglePasswordVisibility = (btn) => {
+    const input = btn.closest('.input-group').querySelector('input');
+    const icon = btn.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+        btn.setAttribute('aria-label', 'Hide password');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+        btn.setAttribute('aria-label', 'Show password');
+    }
+};
+
+// Mobile menu toggle
+const toggleMobileMenu = () => {
+    mainNav.classList.toggle('active');
+    const isActive = mainNav.classList.contains('active');
+    mobileMenuBtn.setAttribute('aria-expanded', isActive);
+    
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = isActive ? 'hidden' : '';
+};
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Toggle between login and signup forms
-    loginTab?.addEventListener('click', () => toggleForms(true));
-    signupTab?.addEventListener('click', () => toggleForms(false));
-    showLoginLink?.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleForms(true);
-    });
-    
-    // Toggle password visibility
-    togglePasswordBtns.forEach(btn => {
+    // Check if user is already logged in
+    const existingUser = localStorage.getItem('user');
+    if (existingUser) {
+        try {
+            const userData = JSON.parse(existingUser);
+            if (userData.role === 'admin') {
+                window.location.href = '/pages/admin/dashboard.html';
+            } else {
+                window.location.href = '/pages/student/dashboard.html';
+            }
+            return;
+        } catch (error) {
+            // Clear invalid session data
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+        }
+    }
+
+    // Tab switching
+    tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const input = btn.closest('.input-group').querySelector('input');
-            togglePasswordVisibility(input, btn);
+            switchTab(btn.dataset.tab);
         });
     });
-    
+
     // Form submissions
-    loginForm?.addEventListener('submit', handleSubmit);
-    signupForm?.addEventListener('submit', handleSubmit);
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleSubmit);
+    }
     
-    // Forgot password
-    forgotPasswordLink?.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const regNumber = prompt('Please enter your registration number:');
-        
-        if (regNumber && validateRegNumber(regNumber)) {
-            try {
-                const response = await fetch(ENDPOINTS.FORGOT_PASSWORD, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ regNumber })
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok) {
-                    alert('If your account exists, a password reset link has been sent to your registered email.');
-                } else {
-                    alert(result.message || 'An error occurred. Please try again later.');
-                }
-            } catch (error) {
-                console.error('Forgot password error:', error);
-                alert('An error occurred. Please try again later.');
-            }
-        } else if (regNumber !== null) {
-            alert('Please enter a valid registration number (format: YY/SC/CO/XXX).');
+    if (signupForm) {
+        signupForm.addEventListener('submit', handleSubmit);
+    }
+
+    // Show login link
+    if (showLoginLink) {
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleForms(true);
+        });
+    }
+
+    // Forgot password link
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Please contact the admin for passcode reset: info@informationsystems.edu.org');
+        });
+    }
+
+    // Password visibility toggles
+    togglePasswordBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            togglePasswordVisibility(btn);
+        });
+    });
+
+    // Mobile menu
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-menu-btn')) {
+            mainNav.classList.remove('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
         }
-        
+    });
+
+    // Close mobile menu on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mainNav.classList.contains('active')) {
+            mainNav.classList.remove('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            mobileMenuBtn.focus();
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Real-time validation
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('blur', () => {
+            const formId = input.closest('form').id;
+            clearErrors(formId);
+        });
     });
 });
+
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        validateRegNumber,
+        validateEmail,
+        handleSubmit,
+        toggleForms
+    };
+}
