@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Courses - Department of Information Systems</title>
     <meta name="description" content="Explore our comprehensive Information Systems courses at the University of Uyo - from undergraduate to graduate programs.">
-    <link rel="stylesheet" href="/styles/page/courses.css">
+    <link rel="stylesheet" href="/styles/pages/courses.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
 </head>
@@ -22,13 +22,13 @@
             </div>
             <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/index.html">Home</a></li>
                     <li><a href="/pages/about.html">About</a></li>
                     <li><a href="/pages/courses.html" class="active" aria-current="page">Courses</a></li>
-                    <li><a href="/#events">Events</a></li>
                     <li><a href="/pages/contact.html">Contact</a></li>
                     <li class="auth-links">
                         <a href="/pages/login.html" class="btn btn-outline" id="loginLink">Student Login</a>
+                        <a href="/pages/admin/login.html" class="btn btn-secondary" id="adminLink">Faculty Portal</a>
                         <a href="#" class="btn btn-danger" id="logoutBtn" style="display: none;">Logout</a>
                     </li>
                 </ul>
@@ -51,6 +51,51 @@
             </div>
         </section>
 
+        <!-- Course Statistics -->
+        <section class="stats-section section" aria-labelledby="stats-title">
+            <div class="container">
+                <h2 id="stats-title" class="sr-only">Course Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number" id="totalCourses">--</h3>
+                            <p class="stat-label">Total Courses</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-layer-group" aria-hidden="true"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number" id="totalLevels">4</h3>
+                            <p class="stat-label">Academic Levels</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book" aria-hidden="true"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number" id="totalMaterials">--</h3>
+                            <p class="stat-label">Course Materials</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">500+</h3>
+                            <p class="stat-label">Active Students</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Course Filters -->
         <section class="filters-section section" aria-labelledby="filters-title">
             <div class="container">
@@ -64,28 +109,25 @@
                             <option value="200">200 Level</option>
                             <option value="300">300 Level</option>
                             <option value="400">400 Level</option>
-                            <option value="500">500 Level (Postgraduate)</option>
                         </select>
                     </div>
                     <div class="filter-group">
                         <label for="typeFilter" class="filter-label">Type:</label>
                         <select id="typeFilter" class="filter-select" aria-label="Filter by course type">
                             <option value="">All Types</option>
-                            <option value="core">Core Courses</option>
-                            <option value="elective">Elective Courses</option>
-                            <option value="general">General Studies</option>
+                            <option value="core">Core</option>
+                            <option value="elective">Elective</option>
+                            <option value="gst">GST</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label for="searchFilter" class="filter-label">Search:</label>
-                        <input type="text" id="searchFilter" class="filter-input" placeholder="Search courses..." aria-label="Search courses">
+                        <button id="clearFiltersBtn" class="btn btn-outline">Clear Filters</button>
                     </div>
-                    <button id="clearFilters" class="btn btn-outline">Clear Filters</button>
                 </div>
             </div>
         </section>
 
-        <!-- Course Materials Section -->
+        <!-- Courses Listing -->
         <section class="courses-section section" aria-labelledby="courses-title">
             <div class="container">
                 <h2 id="courses-title" class="section-title">Available Courses</h2>
@@ -119,49 +161,39 @@
                         <i class="fas fa-search" aria-hidden="true"></i>
                     </div>
                     <h3>No Courses Found</h3>
-                    <p>No courses match your current filters. Try adjusting your search criteria.</p>
+                    <p>No courses match your current filter criteria. Try adjusting your filters.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Course Information -->
-        <section class="course-info-section section bg-light" aria-labelledby="info-title">
+        <!-- Program Information -->
+        <section class="program-info-section section bg-light" aria-labelledby="program-title">
             <div class="container">
-                <h2 id="info-title" class="section-title">Course Information</h2>
-                <div class="info-grid">
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-clock" aria-hidden="true"></i>
+                <h2 id="program-title" class="section-title">Program Information</h2>
+                <div class="program-grid">
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-user-graduate" aria-hidden="true"></i>
                         </div>
-                        <h3>Course Duration</h3>
-                        <p>Most courses are semester-based (15 weeks) with a combination of lectures, tutorials, and practical sessions.</p>
+                        <h3>Undergraduate Program</h3>
+                        <p><strong>Bachelor of Science in Information Systems</strong></p>
+                        <p>Duration: 4 years</p>
+                        <p>A comprehensive program covering systems analysis, database management, enterprise systems, and information security.</p>
                     </div>
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-users" aria-hidden="true"></i>
+                    <div class="program-card">
+                        <div class="program-icon">
+                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                         </div>
-                        <h3>Class Sizes</h3>
-                        <p>We maintain optimal student-to-faculty ratios to ensure personalized attention and effective learning.</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-laptop" aria-hidden="true"></i>
-                        </div>
-                        <h3>Learning Resources</h3>
-                        <p>Access to modern computer labs, online materials, and industry-standard software for hands-on learning.</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-certificate" aria-hidden="true"></i>
-                        </div>
-                        <h3>Assessment</h3>
-                        <p>Continuous assessment through assignments, projects, tests, and examinations to ensure comprehensive evaluation.</p>
+                        <h3>Graduate Program</h3>
+                        <p><strong>Master of Science in Information Systems</strong></p>
+                        <p>Duration: 2 years</p>
+                        <p>Advanced study in systems integration, business intelligence, and strategic technology management.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Prerequisites Information -->
+        <!-- Prerequisites -->
         <section class="prerequisites-section section" aria-labelledby="prereq-title">
             <div class="container">
                 <h2 id="prereq-title" class="section-title">Prerequisites & Requirements</h2>
@@ -190,53 +222,7 @@
                                 <h4>400 Level Courses</h4>
                                 <p>Advanced courses requiring completion of foundational courses and project proposal</p>
                             </div>
-                            <div class="prereq-item">
-                                <h4>Postgraduate Courses</h4>
-                                <p>Bachelor's degree in related field with minimum second class lower division</p>
-                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Career Outcomes -->
-        <section class="careers-section section bg-light" aria-labelledby="careers-title">
-            <div class="container">
-                <h2 id="careers-title" class="section-title">Career Outcomes</h2>
-                <div class="careers-intro">
-                    <p>Our graduates are well-prepared for diverse career opportunities in the rapidly evolving field of Information Systems.</p>
-                </div>
-                <div class="careers-grid">
-                    <div class="career-category">
-                        <h3>Technology Roles</h3>
-                        <ul>
-                            <li>Systems Analyst</li>
-                            <li>Database Administrator</li>
-                            <li>IT Project Manager</li>
-                            <li>Business Intelligence Analyst</li>
-                            <li>Cybersecurity Specialist</li>
-                        </ul>
-                    </div>
-                    <div class="career-category">
-                        <h3>Business Roles</h3>
-                        <ul>
-                            <li>Business Analyst</li>
-                            <li>IT Consultant</li>
-                            <li>Digital Transformation Manager</li>
-                            <li>Process Improvement Specialist</li>
-                            <li>Technology Strategy Advisor</li>
-                        </ul>
-                    </div>
-                    <div class="career-category">
-                        <h3>Entrepreneurship</h3>
-                        <ul>
-                            <li>Tech Startup Founder</li>
-                            <li>IT Solutions Provider</li>
-                            <li>Digital Marketing Agency Owner</li>
-                            <li>Software Development Company</li>
-                            <li>E-commerce Platform Developer</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -280,16 +266,20 @@
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="/">Home</a></li>
+                        <li><a href="/index.html">Home</a></li>
                         <li><a href="/pages/about.html">About Us</a></li>
                         <li><a href="/pages/courses.html">Our Courses</a></li>
-                        <li><a href="/#events">Events</a></li>
                         <li><a href="/pages/contact.html">Contact</a></li>
+                        <li><a href="/pages/login.html">Student Portal</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Department of Information Systems, Faculty of Computing, University of Uyo. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
