@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Department of Information Systems</title>
-    <meta name="description" content="Learn about the Department of Information Systems at the University of Uyo - our mission, vision, faculty, and academic programs.">
-    <link rel="stylesheet" href="/styles/pages/about.css">
+    <meta name="description" content="Learn about the Department of Information Systems at the University of Uyo - our mission, vision, faculty, and programs.">
+    <link rel="stylesheet" href="../styles/about.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- Skip Link for Accessibility -->
@@ -22,13 +22,12 @@
             </div>
             <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/pages/about.html" class="active" aria-current="page">About</a></li>
-                    <li><a href="/pages/courses.html">Courses</a></li>
-                    <li><a href="/#events">Events</a></li>
-                    <li><a href="/pages/contact.html">Contact</a></li>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="about.html" class="active" aria-current="page">About</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                     <li class="auth-links">
-                        <a href="/pages/login.html" class="btn btn-outline" id="loginLink">Student Login</a>
+                        <a href="login.html" class="btn btn-outline" id="loginLink">Student Login</a>
                         <a href="#" class="btn btn-danger" id="logoutBtn" style="display: none;">Logout</a>
                     </li>
                 </ul>
@@ -39,20 +38,39 @@
         </div>
     </header>
 
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner" aria-hidden="true">
+        <div class="spinner"></div>
+        <p>Loading department information...</p>
+    </div>
+
     <!-- Main Content -->
-    <main id="main-content" class="main-content" role="main">
+    <main id="main-content" class="main-content">
         <!-- Hero Section -->
-        <section class="hero-section" aria-labelledby="hero-title">
+        <section class="hero-section">
             <div class="container">
                 <div class="hero-content">
-                    <h1 id="hero-title">About Our Department</h1>
+                    <h1>About Our Department</h1>
                     <p class="hero-subtitle">Bridging Technology and Business for Digital Transformation</p>
+                    <div class="hero-stats" id="heroStats">
+                        <!-- Stats will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Department Info Section -->
+        <section class="department-info-section section" aria-labelledby="dept-info-title">
+            <div class="container">
+                <h2 id="dept-info-title" class="section-title">Department Information</h2>
+                <div class="dept-info-grid" id="deptInfoGrid">
+                    <!-- Department info will be loaded dynamically -->
                 </div>
             </div>
         </section>
 
         <!-- Mission & Vision -->
-        <section class="mission-vision-section section" aria-labelledby="mission-title">
+        <section class="mission-vision-section section bg-light" aria-labelledby="mission-title">
             <div class="container">
                 <div class="content-grid">
                     <div class="mission-card card">
@@ -60,108 +78,25 @@
                             <i class="fas fa-bullseye" aria-hidden="true"></i>
                         </div>
                         <h2 id="mission-title">Our Mission</h2>
-                        <p>To provide world-class education in Information Systems that prepares students to become innovative leaders in technology and business integration, fostering digital transformation across industries in Nigeria and beyond.</p>
+                        <p id="missionText">Loading mission statement...</p>
                     </div>
                     <div class="vision-card card">
                         <div class="card-icon">
                             <i class="fas fa-eye" aria-hidden="true"></i>
                         </div>
                         <h2>Our Vision</h2>
-                        <p>To be the leading department in Nigeria for Information Systems education, research, and innovation, producing graduates who drive digital excellence and sustainable development in the global economy.</p>
+                        <p id="visionText">Loading vision statement...</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Department Overview -->
-        <section class="overview-section section bg-light" aria-labelledby="overview-title">
+        <!-- Objectives -->
+        <section class="objectives-section section" aria-labelledby="objectives-title">
             <div class="container">
-                <h2 id="overview-title" class="section-title">Department Overview</h2>
-                <div class="overview-content">
-                    <div class="overview-text">
-                        <p class="lead">The Department of Information Systems at the University of Uyo represents the convergence of technology and business strategy, preparing students for the digital age.</p>
-                        
-                        <div class="overview-details">
-                            <h3>What We Do</h3>
-                            <p>Our department focuses on the strategic application of information technology to solve business problems and create competitive advantages. We combine technical expertise with business acumen to produce well-rounded professionals.</p>
-                            
-                            <h3>Our Approach</h3>
-                            <p>We emphasize practical learning through real-world projects, industry partnerships, and cutting-edge research. Our curriculum is designed to meet the evolving needs of the digital economy.</p>
-                            
-                            <h3>Academic Excellence</h3>
-                            <p>We offer comprehensive programs that cover database systems, systems analysis and design, enterprise systems, cybersecurity, data analytics, and digital transformation strategies.</p>
-                        </div>
-                    </div>
-                    <div class="overview-stats">
-                        <div class="stat-card">
-                            <div class="stat-number" id="studentsCount">500+</div>
-                            <div class="stat-label">Active Students</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="facultyCount">25+</div>
-                            <div class="stat-label">Faculty Members</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="graduatesCount">1000+</div>
-                            <div class="stat-label">Graduates</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="yearsCount">15+</div>
-                            <div class="stat-label">Years of Excellence</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Faculty Overview -->
-        <section class="faculty-section section" aria-labelledby="faculty-title">
-            <div class="container">
-                <h2 id="faculty-title" class="section-title">Our Faculty</h2>
-                <div class="faculty-intro">
-                    <p>Our distinguished faculty members bring together academic excellence and industry experience to provide students with comprehensive education in Information Systems.</p>
-                </div>
-                
-                <div class="faculty-grid" id="facultyGrid">
-                    <!-- Faculty members will be loaded dynamically -->
-                    <div class="loading" aria-live="polite">Loading faculty information...</div>
-                </div>
-                
-                <!-- Faculty Highlights -->
-                <div class="faculty-highlights">
-                    <h3>Faculty Expertise Areas</h3>
-                    <div class="expertise-grid">
-                        <div class="expertise-card">
-                            <i class="fas fa-database" aria-hidden="true"></i>
-                            <h4>Database Systems</h4>
-                            <p>Advanced database design, management, and optimization</p>
-                        </div>
-                        <div class="expertise-card">
-                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                            <h4>Cybersecurity</h4>
-                            <p>Information security, risk management, and digital forensics</p>
-                        </div>
-                        <div class="expertise-card">
-                            <i class="fas fa-chart-line" aria-hidden="true"></i>
-                            <h4>Data Analytics</h4>
-                            <p>Business intelligence, machine learning, and predictive analytics</p>
-                        </div>
-                        <div class="expertise-card">
-                            <i class="fas fa-cogs" aria-hidden="true"></i>
-                            <h4>Systems Analysis</h4>
-                            <p>Systems design, process improvement, and digital transformation</p>
-                        </div>
-                        <div class="expertise-card">
-                            <i class="fas fa-cloud" aria-hidden="true"></i>
-                            <h4>Cloud Computing</h4>
-                            <p>Cloud architecture, migration strategies, and service management</p>
-                        </div>
-                        <div class="expertise-card">
-                            <i class="fas fa-mobile-alt" aria-hidden="true"></i>
-                            <h4>Mobile Systems</h4>
-                            <p>Mobile application development and enterprise mobility</p>
-                        </div>
-                    </div>
+                <h2 id="objectives-title" class="section-title">Our Objectives</h2>
+                <div class="objectives-grid" id="objectivesGrid">
+                    <!-- Objectives will be loaded dynamically -->
                 </div>
             </div>
         </section>
@@ -170,123 +105,33 @@
         <section class="programs-section section bg-light" aria-labelledby="programs-title">
             <div class="container">
                 <h2 id="programs-title" class="section-title">Academic Programs</h2>
-                <div class="programs-grid">
-                    <div class="program-card">
-                        <div class="program-icon">
-                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                        </div>
-                        <h3>Bachelor of Science in Information Systems</h3>
-                        <p>A comprehensive 4-year undergraduate program covering the fundamentals of information systems, business processes, and technology integration.</p>
-                        <ul>
-                            <li>Systems Analysis and Design</li>
-                            <li>Database Management Systems</li>
-                            <li>Enterprise Resource Planning</li>
-                            <li>Information Security</li>
-                        </ul>
-                    </div>
-                    <div class="program-card">
-                        <div class="program-icon">
-                            <i class="fas fa-user-graduate" aria-hidden="true"></i>
-                        </div>
-                        <h3>Master of Science in Information Systems</h3>
-                        <p>An advanced graduate program for professionals seeking to enhance their expertise in strategic information systems management.</p>
-                        <ul>
-                            <li>Advanced Database Systems</li>
-                            <li>IT Strategy and Governance</li>
-                            <li>Business Intelligence</li>
-                            <li>Research Methodology</li>
-                        </ul>
-                    </div>
-                    <div class="program-card">
-                        <div class="program-icon">
-                            <i class="fas fa-certificate" aria-hidden="true"></i>
-                        </div>
-                        <h3>Professional Certifications</h3>
-                        <p>Industry-recognized certification programs to enhance professional skills and career advancement opportunities.</p>
-                        <ul>
-                            <li>Microsoft Azure Fundamentals</li>
-                            <li>CompTIA Security+</li>
-                            <li>Project Management (PMP)</li>
-                            <li>Data Analytics Certification</li>
-                        </ul>
-                    </div>
+                <div class="programs-grid" id="programsGrid">
+                    <!-- Programs will be loaded dynamically -->
                 </div>
             </div>
         </section>
 
-        <!-- Research & Innovation -->
-        <section class="research-section section" aria-labelledby="research-title">
+        <!-- Areas of Expertise -->
+        <section class="expertise-section section" aria-labelledby="expertise-title">
             <div class="container">
-                <h2 id="research-title" class="section-title">Research & Innovation</h2>
-                <div class="research-content">
-                    <div class="research-intro">
-                        <p>Our department is at the forefront of Information Systems research, contributing to knowledge advancement and practical solutions for real-world challenges.</p>
-                    </div>
-                    
-                    <div class="research-areas">
-                        <h3>Current Research Areas</h3>
-                        <div class="research-grid">
-                            <div class="research-card">
-                                <h4>Digital Transformation in SMEs</h4>
-                                <p>Investigating how small and medium enterprises in Nigeria can leverage digital technologies for growth and competitiveness.</p>
-                            </div>
-                            <div class="research-card">
-                                <h4>Healthcare Information Systems</h4>
-                                <p>Developing innovative solutions for healthcare delivery and management in resource-constrained environments.</p>
-                            </div>
-                            <div class="research-card">
-                                <h4>E-Government Solutions</h4>
-                                <p>Research on digital government services and citizen engagement platforms for improved governance.</p>
-                            </div>
-                            <div class="research-card">
-                                <h4>Sustainable IT Solutions</h4>
-                                <p>Exploring green computing and sustainable information technology practices for environmental conservation.</p>
-                            </div>
-                        </div>
-                    </div>
+                <h2 id="expertise-title" class="section-title">Areas of Expertise</h2>
+                <div class="expertise-grid" id="expertiseGrid">
+                    <!-- Expertise areas will be loaded dynamically -->
                 </div>
             </div>
         </section>
 
-        <!-- Industry Partnerships -->
-        <section class="partnerships-section section bg-light" aria-labelledby="partnerships-title">
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message" style="display: none;" role="alert">
             <div class="container">
-                <h2 id="partnerships-title" class="section-title">Industry Partnerships</h2>
-                <div class="partnerships-content">
-                    <p>We maintain strong relationships with leading technology companies and organizations to provide our students with real-world experience and career opportunities.</p>
-                    
-                    <div class="partners-grid">
-                        <div class="partner-category">
-                            <h3>Technology Partners</h3>
-                            <ul>
-                                <li>Microsoft Nigeria</li>
-                                <li>IBM West Africa</li>
-                                <li>Oracle Corporation</li>
-                                <li>SAP Africa</li>
-                            </ul>
-                        </div>
-                        <div class="partner-category">
-                            <h3>Financial Services</h3>
-                            <ul>
-                                <li>United Bank for Africa (UBA)</li>
-                                <li>Guaranty Trust Bank (GTBank)</li>
-                                <li>First Bank of Nigeria</li>
-                                <li>Zenith Bank</li>
-                            </ul>
-                        </div>
-                        <div class="partner-category">
-                            <h3>Consulting Firms</h3>
-                            <ul>
-                                <li>Deloitte Nigeria</li>
-                                <li>PwC Nigeria</li>
-                                <li>KPMG Nigeria</li>
-                                <li>EY Nigeria</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="error-content">
+                    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                    <h3>Unable to Load Department Information</h3>
+                    <p>We're experiencing technical difficulties. Please try refreshing the page or contact us directly.</p>
+                    <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -297,10 +142,6 @@
                     <h3>Department of Information Systems</h3>
                     <p>Faculty of Computing, University of Uyo</p>
                     <p>P.M.B. 1017, Uyo, Akwa Ibom State, Nigeria</p>
-                    <div class="footer-stats">
-                        <p><strong>Established:</strong> 2010</p>
-                        <p><strong>Accreditation:</strong> National Universities Commission (NUC)</p>
-                    </div>
                 </div>
                 <div class="footer-contact">
                     <h3>Contact Information</h3>
@@ -315,7 +156,7 @@
                         </p>
                         <p>
                             <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 
-                            Faculty of Computing Building, Room 301
+                            Faculty of Computing Building
                         </p>
                     </div>
                     <div class="social-links">
@@ -339,19 +180,17 @@
                         <div class="links-column">
                             <h4>Academic</h4>
                             <ul>
-                                <li><a href="/pages/courses.html">Our Courses</a></li>
-                                <li><a href="/#events">Events</a></li>
-                                <li><a href="/pages/login.html">Student Portal</a></li>
-                                <li><a href="/pages/admin/login.html">Faculty Portal</a></li>
+                                <li><a href="courses.html">Our Courses</a></li>
+                                <li><a href="login.html">Student Portal</a></li>
+                                <li><a href="admin/login.html">Faculty Portal</a></li>
                             </ul>
                         </div>
                         <div class="links-column">
                             <h4>Information</h4>
                             <ul>
-                                <li><a href="/pages/about.html">About Us</a></li>
-                                <li><a href="/pages/contact.html">Contact</a></li>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="#research">Research</a></li>
+                                <li><a href="about.html">About Us</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="../index.html">Home</a></li>
                             </ul>
                         </div>
                     </div>
@@ -368,6 +207,6 @@
         </div>
     </footer>
 
-    <script src="/scripts/about.js" type="module"></script>
+    <script src="../scripts/about.js"></script>
 </body>
 </html>
