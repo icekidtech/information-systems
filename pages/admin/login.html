@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Department of Information Systems</title>
+    <title>Admin Login - Department of Information Systems</title>
     <link rel="stylesheet" href="/styles/pages/_login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -17,11 +17,13 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#courses">Courses</a></li>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="/pages/login.html" class="btn btn-outline active">Student Login</a></li>
+                    <li><a href="/pages/about.html">About</a></li>
+                    <li><a href="/pages/courses.html">Courses</a></li>
+                    <li><a href="/pages/events.html">Events</a></li>
+                    <li><a href="/pages/contact.html">Contact</a></li>
+                    <li class="auth-links">
+                        <a href="/pages/admin/login.html" class="btn btn-outline active">Admin Login</a>
+                    </li>
                 </ul>
             </nav>
             <button class="mobile-menu-btn" aria-label="Toggle menu">
@@ -30,99 +32,39 @@
         </div>
     </header>
 
-    <!-- Auth Container -->
-    <main class="auth-container">
+    <!-- Main Content -->
+    <main class="main-content">
         <div class="container">
-            <div class="auth-box">
-                <!-- Tabs -->
-                <div class="tabs">
-                    <button class="tab-btn active" data-tab="login">Login</button>
-                    <button class="tab-btn" data-tab="signup">Sign Up</button>
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>Admin Portal</h1>
+                    <p>Manage department resources and student registrations</p>
                 </div>
 
-                <!-- Login Form -->
-                <form id="loginForm" class="auth-form active">
-                    <h2>Student Login</h2>
-                    <div id="loginError" class="error-message"></div>
-                    
-                    <div class="form-group">
-                        <label for="loginRegNumber">Registration Number</label>
-                        <div class="input-group">
-                            <i class="fas fa-id-card"></i>
-                            <input type="text" id="loginRegNumber" name="regNumber" 
-                                   placeholder="e.g., 24/SC/CO/346" 
-                                   pattern="\d{2}\/[A-Z]{2}\/[A-Z]{2}\/\d{3}" 
-                                   title="Format: YY/SC/CO/XXX" required>
+                <!-- Admin Login Form -->
+                <div class="form-container">
+                    <h2>Admin Login</h2>
+                    <form id="adminLoginForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required>
                         </div>
-                        <span class="error" id="loginRegNumberError"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="loginPasscode">Passcode</label>
-                        <div class="input-group">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="loginPasscode" name="passcode" 
-                                   placeholder="Enter your passcode" required>
-                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <input type="password" id="password" name="password" required>
+                                <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
-                        <span class="error" id="loginPasscodeError"></span>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    <div class="form-footer">
+                        <p><a href="/pages/login.html">Student Login</a></p>
                     </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
-                        <p class="text-center">
-                            <a href="#forgot-password" id="forgotPassword">Forgot Passcode?</a>
-                        </p>
-                    </div>
-                </form>
-
-                <!-- Signup Form -->
-                <form id="signupForm" class="auth-form">
-                    <h2>Student Registration</h2>
-                    <div id="signupError" class="error-message"></div>
-                    
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <div class="input-group">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="fullName" name="fullName" 
-                                   placeholder="Enter your full name" required>
-                        </div>
-                        <span class="error" id="fullNameError"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="regNumber">Registration Number</label>
-                        <div class="input-group">
-                            <i class="fas fa-id-card"></i>
-                            <input type="text" id="regNumber" name="regNumber" 
-                                   placeholder="e.g., 24/SC/CO/346" 
-                                   pattern="\d{2}\/[A-Z]{2}\/[A-Z]{2}\/\d{3}" 
-                                   title="Format: YY/SC/CO/XXX" required>
-                        </div>
-                        <span class="error" id="regNumberError"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <div class="input-group">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" name="email" 
-                                   placeholder="your.email@gmail.com" 
-                                   title="Enter a valid email address" required>
-                        </div>
-                        <span class="error" id="emailError"></span>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary btn-block">Register</button>
-                        <p class="text-center">
-                            Already have an account? <a href="#" id="showLogin">Login here</a>
-                        </p>
-                    </div>
-                </form>
+                    <div id="adminLoginMessage" class="form-message" aria-live="polite"></div>
+                </div>
             </div>
         </div>
     </main>
@@ -151,10 +93,10 @@
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#courses">Our Courses</a></li>
-                        <li><a href="#events">Events</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="/pages/about.html">About Us</a></li>
+                        <li><a href="/pages/courses.html">Our Courses</a></li>
+                        <li><a href="/pages/events.html">Events</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
                     </ul>
                 </div>
             </div>
