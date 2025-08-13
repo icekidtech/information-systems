@@ -16,36 +16,42 @@
             </div>
             <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
-                    <li><a href="/" aria-current="page">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#materials">Courses</a></li>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#" id="logoutBtn" class="btn btn-outline">Logout</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/about.html">About</a></li>
+                    <li><a href="/pages/courses.html">Courses</a></li>
+                    <li><a href="/pages/events.html">Events</a></li>
+                    <li><a href="/pages/contact.html">Contact</a></li>
+                    <li class="auth-links">
+                        <span id="welcomeMessage">Student Dashboard</span>
+                        <a href="#" class="btn btn-danger" id="logoutBtn">Logout</a>
+                    </li>
                 </ul>
             </nav>
-            <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </header>
 
-    <main class="dashboard-main" tabindex="-1">
-        <section class="welcome-section" aria-label="Welcome">
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Header -->
+        <section class="dashboard-header section">
             <div class="container">
-                <h2 id="welcomeMessage">Welcome, Student</h2>
+                <h1 id="studentWelcome">Welcome, Student</h1>
+                <p>Access your course materials and stay updated with events</p>
             </div>
         </section>
 
         <!-- Course Materials -->
         <section id="materials" class="section" aria-labelledby="materialsTitle">
             <div class="container">
-                <h2 class="section-title" id="materialsTitle">Available Course Materials</h2>
-                <div class="table-responsive">
-                    <table class="materials-table" aria-describedby="materialsTitle">
+                <h2 class="section-title" id="materialsTitle">Course Materials</h2>
+                <div class="table-container">
+                    <table class="data-table" role="table" aria-label="Course materials">
                         <thead>
-                            <tr>
-                                <th scope="col">Course Title</th>
+                            <tr role="row">
+                                <th scope="col">Course</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">File Name</th>
                                 <th scope="col">Download</th>
@@ -74,40 +80,40 @@
         </section>
 
         <!-- Change Passcode -->
-        <section id="changePasscode" class="section" aria-labelledby="changePasscodeTitle">
+        <section id="passcode" class="section" aria-labelledby="passcodeTitle">
             <div class="container">
-                <h2 class="section-title" id="changePasscodeTitle">Change Passcode</h2>
-                <form id="passcodeForm" class="passcode-form" autocomplete="off" aria-describedby="passcodeFormDesc">
-                    <p id="passcodeFormDesc" class="form-desc">Update your passcode for account security.</p>
+                <h2 class="section-title" id="passcodeTitle">Change Passcode</h2>
+                <form id="passcodeForm" class="passcode-form">
                     <div class="form-group">
                         <label for="currentPasscode">Current Passcode</label>
                         <div class="input-group">
-                            <input type="password" id="currentPasscode" name="currentPasscode" required aria-required="true" autocomplete="current-password">
-                            <button type="button" class="toggle-password" aria-label="Show/Hide passcode"><i class="fas fa-eye"></i></button>
+                            <input type="password" id="currentPasscode" name="currentPassword" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle passcode visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                        <span class="error" id="currentPasscodeError"></span>
                     </div>
                     <div class="form-group">
                         <label for="newPasscode">New Passcode</label>
                         <div class="input-group">
-                            <input type="password" id="newPasscode" name="newPasscode" required aria-required="true" minlength="6" autocomplete="new-password">
-                            <button type="button" class="toggle-password" aria-label="Show/Hide passcode"><i class="fas fa-eye"></i></button>
+                            <input type="password" id="newPasscode" name="newPassword" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle passcode visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                        <span class="error" id="newPasscodeError"></span>
                     </div>
                     <div class="form-group">
                         <label for="confirmPasscode">Confirm New Passcode</label>
                         <div class="input-group">
-                            <input type="password" id="confirmPasscode" name="confirmPasscode" required aria-required="true" minlength="6" autocomplete="new-password">
-                            <button type="button" class="toggle-password" aria-label="Show/Hide passcode"><i class="fas fa-eye"></i></button>
+                            <input type="password" id="confirmPasscode" name="confirmPassword" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle passcode visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                        <span class="error" id="confirmPasscodeError"></span>
                     </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Change Passcode</button>
-                    </div>
-                    <div id="passcodeFormMessage" class="form-message" aria-live="polite"></div>
+                    <button type="submit" class="btn btn-primary">Change Passcode</button>
                 </form>
+                <div id="passcodeFormMessage" class="form-message" aria-live="polite"></div>
             </div>
         </section>
     </main>
@@ -135,10 +141,10 @@
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#materials">Our Courses</a></li>
-                        <li><a href="#events">Events</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="/pages/about.html">About Us</a></li>
+                        <li><a href="/pages/courses.html">Our Courses</a></li>
+                        <li><a href="/pages/events.html">Events</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
                     </ul>
                 </div>
             </div>

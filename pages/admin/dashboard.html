@@ -16,170 +16,192 @@
             </div>
             <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
-                    <li><a href="/" aria-current="page">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#materials">Courses</a></li>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#" id="logoutBtn" class="btn btn-outline">Logout</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pages/about.html">About</a></li>
+                    <li><a href="/pages/courses.html">Courses</a></li>
+                    <li><a href="/pages/events.html">Events</a></li>
+                    <li><a href="/pages/contact.html">Contact</a></li>
+                    <li class="auth-links">
+                        <span id="welcomeMessage">Admin Dashboard</span>
+                        <a href="#" class="btn btn-danger" id="logoutBtn">Logout</a>
+                    </li>
                 </ul>
             </nav>
-            <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </header>
 
-    <main class="dashboard-main" tabindex="-1">
-        <section class="welcome-section" aria-label="Welcome">
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Header -->
+        <section class="dashboard-header section">
             <div class="container">
-                <h2 id="welcomeMessage">Welcome, Admin</h2>
+                <h1 id="adminWelcome">Welcome, Admin</h1>
+                <p>Manage student registrations, course materials, and events</p>
+            </div>
+        </section>
+
+        <!-- Dashboard Stats -->
+        <section class="stats-section section bg-light">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3 id="totalStudents">0</h3>
+                        <p>Total Students</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock"></i>
+                        <h3 id="pendingRegistrations">0</h3>
+                        <p>Pending Registrations</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-book"></i>
+                        <h3 id="totalMaterials">0</h3>
+                        <p>Course Materials</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-calendar"></i>
+                        <h3 id="totalEvents">0</h3>
+                        <p>Events Posted</p>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Pending Registrations -->
-        <section id="pendingRegistrations" class="section" aria-labelledby="pendingTitle">
+        <section id="registrations" class="section" aria-labelledby="registrationsTitle">
             <div class="container">
-                <h2 class="section-title" id="pendingTitle">Pending Registrations</h2>
-                <div class="table-responsive">
-                    <table class="pending-table" aria-describedby="pendingTitle">
+                <h2 class="section-title" id="registrationsTitle">Pending Student Registrations</h2>
+                <div class="table-container">
+                    <table class="data-table" role="table" aria-label="Pending student registrations">
                         <thead>
-                            <tr>
+                            <tr role="row">
                                 <th scope="col">Name</th>
-                                <th scope="col">Reg Number</th>
+                                <th scope="col">Registration Number</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Date Submitted</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="pendingBody">
+                        <tbody id="registrationsBody">
                             <tr>
-                                <td colspan="4" class="loading">Loading pending registrations...</td>
+                                <td colspan="5" class="loading">Loading registrations...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div id="pendingError" class="error-message" role="alert" aria-live="polite"></div>
+                <div id="registrationsError" class="error-message" role="alert" aria-live="polite"></div>
             </div>
         </section>
 
-        <!-- Upload Course Materials -->
-        <section id="uploadMaterials" class="section" aria-labelledby="uploadTitle">
+        <!-- Upload Materials -->
+        <section id="materials" class="section bg-light" aria-labelledby="materialsTitle">
             <div class="container">
-                <h2 class="section-title" id="uploadTitle">Upload Course Materials</h2>
-                <form id="materialForm" class="upload-form" enctype="multipart/form-data" aria-describedby="materialFormDesc">
-                    <p id="materialFormDesc" class="form-desc">Upload new course materials for students.</p>
-                    <div class="form-group">
-                        <label for="courseTitle">Course Title</label>
-                        <input type="text" id="courseTitle" name="courseTitle" required aria-required="true" maxlength="100">
-                        <span class="error" id="courseTitleError"></span>
+                <h2 class="section-title" id="materialsTitle">Upload Course Materials</h2>
+                <form id="materialUploadForm" class="upload-form" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="courseTitle">Course Title</label>
+                            <input type="text" id="courseTitle" name="courseTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="materialType">Material Type</label>
+                            <select id="materialType" name="type" required>
+                                <option value="">Select type</option>
+                                <option value="lecture">Lecture Notes</option>
+                                <option value="assignment">Assignment</option>
+                                <option value="exam">Exam Paper</option>
+                                <option value="video">Video</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="materialDescription">Description</label>
+                            <textarea id="materialDescription" name="description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="materialFile">Upload File</label>
+                            <input type="file" id="materialFile" name="file" required
+                                   accept=".pdf,.doc,.docx,.ppt,.pptx,.mp4,.avi,.mov,.jpg,.jpeg,.png">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="materialType">Material Type</label>
-                        <select id="materialType" name="materialType" required aria-required="true">
-                            <option value="">Select type</option>
-                            <option value="pdf">PDF</option>
-                            <option value="pptx">PowerPoint</option>
-                            <option value="docx">Word Document</option>
-                            <option value="video">Video</option>
-                        </select>
-                        <span class="error" id="materialTypeError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="materialFile">File Upload</label>
-                        <input type="file" id="materialFile" name="materialFile" required aria-required="true" accept=".pdf,.pptx,.docx,.mp4,.avi,.mov">
-                        <span class="error" id="materialFileError"></span>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Upload Material</button>
-                    </div>
-                    <div id="materialFormMessage" class="form-message" aria-live="polite"></div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Upload Material
+                    </button>
                 </form>
+                <div id="materialUploadMessage" class="form-message" aria-live="polite"></div>
             </div>
         </section>
 
-        <!-- Post News & Events -->
-        <section id="postEvents" class="section bg-light" aria-labelledby="eventTitle">
+        <!-- Post Events -->
+        <section id="events" class="section" aria-labelledby="eventsTitle">
             <div class="container">
-                <h2 class="section-title" id="eventTitle">Post News & Upcoming Events</h2>
-                <form id="eventForm" class="event-form" enctype="multipart/form-data" aria-describedby="eventFormDesc">
-                    <p id="eventFormDesc" class="form-desc">Announce new events or news for the department.</p>
-                    <div class="form-group">
-                        <label for="eventTitleInput">Event Title</label>
-                        <input type="text" id="eventTitleInput" name="eventTitle" required aria-required="true" maxlength="100">
-                        <span class="error" id="eventTitleError"></span>
+                <h2 class="section-title" id="eventsTitle">Post Events & Announcements</h2>
+                <form id="eventForm" class="event-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title</label>
+                            <input type="text" id="eventTitle" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDate">Event Date</label>
+                            <input type="datetime-local" id="eventDate" name="eventDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventLocation">Location (Optional)</label>
+                            <input type="text" id="eventLocation" name="location">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="eventDescription">Event Description</label>
+                            <textarea id="eventDescription" name="description" rows="4" required></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="eventDate">Event Date</label>
-                        <input type="date" id="eventDate" name="eventDate" required aria-required="true">
-                        <span class="error" id="eventDateError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="eventDesc">Description</label>
-                        <textarea id="eventDesc" name="eventDesc" rows="3" required aria-required="true" maxlength="500"></textarea>
-                        <span class="error" id="eventDescError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="eventImage">Image (optional)</label>
-                        <input type="file" id="eventImage" name="eventImage" accept="image/*">
-                        <span class="error" id="eventImageError"></span>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Post Event</button>
-                    </div>
-                    <div id="eventFormMessage" class="form-message" aria-live="polite"></div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-calendar-plus"></i> Post Event
+                    </button>
                 </form>
+                <div id="eventFormMessage" class="form-message" aria-live="polite"></div>
             </div>
         </section>
 
-        <!-- Uploaded Materials -->
-        <section id="materials" class="section" aria-labelledby="materialsTitle">
+        <!-- Change Password -->
+        <section id="password" class="section bg-light" aria-labelledby="passwordTitle">
             <div class="container">
-                <h2 class="section-title" id="materialsTitle">Uploaded Materials</h2>
-                <div class="table-responsive">
-                    <table class="materials-table" aria-describedby="materialsTitle">
-                        <thead>
-                            <tr>
-                                <th scope="col">Course Title</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">File Name</th>
-                                <th scope="col">Uploaded</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="materialsBody">
-                            <tr>
-                                <td colspan="5" class="loading">Loading materials...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="materialsError" class="error-message" role="alert" aria-live="polite"></div>
-            </div>
-        </section>
-
-        <!-- Recently Posted Events -->
-        <section id="events" class="section bg-light" aria-labelledby="eventsTitle">
-            <div class="container">
-                <h2 class="section-title" id="eventsTitle">Recently Posted Events</h2>
-                <div class="table-responsive">
-                    <table class="events-table" aria-describedby="eventsTitle">
-                        <thead>
-                            <tr>
-                                <th scope="col">Title</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="eventsBody">
-                            <tr>
-                                <td colspan="5" class="loading">Loading events...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="eventsError" class="error-message" role="alert" aria-live="polite"></div>
+                <h2 class="section-title" id="passwordTitle">Change Password</h2>
+                <form id="passwordForm" class="password-form">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <div class="input-group">
+                            <input type="password" id="currentPassword" name="currentPassword" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <div class="input-group">
+                            <input type="password" id="newPassword" name="newPassword" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <div class="input-group">
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </form>
+                <div id="passwordFormMessage" class="form-message" aria-live="polite"></div>
             </div>
         </section>
     </main>
@@ -207,10 +229,10 @@
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#materials">Our Courses</a></li>
-                        <li><a href="#events">Events</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="/pages/about.html">About Us</a></li>
+                        <li><a href="/pages/courses.html">Our Courses</a></li>
+                        <li><a href="/pages/events.html">Events</a></li>
+                        <li><a href="/pages/contact.html">Contact</a></li>
                     </ul>
                 </div>
             </div>
