@@ -17,10 +17,77 @@ const CONFIG = {
 const elements = {
     mobileMenuBtn: document.querySelector('.mobile-menu-btn'),
     mainNav: document.querySelector('.main-nav'),
-    statsCards: document.querySelectorAll('.stat-number'),
-    facultyGrid: document.querySelector('.faculty-grid'),
-    aboutSection: document.querySelector('.about-content'),
-    visionMission: document.querySelector('.vision-mission')
+    loadingSpinner: document.getElementById('loadingSpinner'),
+    mainContent: document.querySelector('.main-content'),
+    heroStats: document.getElementById('heroStats'),
+    deptInfoGrid: document.getElementById('deptInfoGrid'),
+    objectivesGrid: document.getElementById('objectivesGrid'),
+    programsGrid: document.getElementById('programsGrid'),
+    expertiseGrid: document.getElementById('expertiseGrid'),
+    errorMessage: document.getElementById('errorMessage'),
+    loginLink: document.getElementById('loginLink'),
+    logoutBtn: document.getElementById('logoutBtn'),
+    authLinks: document.querySelector('.auth-links')
+};
+
+// Static data for immediate rendering
+const staticData = {
+    stats: [
+        { number: '500+', label: 'Students Enrolled' },
+        { number: '15+', label: 'Faculty Members' },
+        { number: '10+', label: 'Years of Excellence' },
+        { number: '95%', label: 'Graduate Employment Rate' }
+    ],
+    departmentInfo: [
+        { title: 'Established', content: '2010' },
+        { title: 'Location', content: 'Faculty of Computing Building' },
+        { title: 'Head of Department', content: 'Prof. John Doe' },
+        { title: 'Total Faculty', content: '15 Lecturers' }
+    ],
+    objectives: [
+        {
+            icon: 'fas fa-graduation-cap',
+            title: 'Quality Education',
+            description: 'Provide comprehensive education in information systems and technology'
+        },
+        {
+            icon: 'fas fa-lightbulb',
+            title: 'Innovation',
+            description: 'Foster innovative thinking and problem-solving skills'
+        },
+        {
+            icon: 'fas fa-handshake',
+            title: 'Industry Partnership',
+            description: 'Build strong partnerships with industry leaders'
+        },
+        {
+            icon: 'fas fa-globe',
+            title: 'Global Perspective',
+            description: 'Prepare students for the global digital economy'
+        }
+    ],
+    programs: [
+        {
+            title: 'Bachelor of Information Systems',
+            degree: 'B.Sc. Information Systems',
+            duration: '4 Years',
+            description: 'Comprehensive undergraduate program covering business processes, technology, and data management.'
+        },
+        {
+            title: 'Master of Information Systems',
+            degree: 'M.Sc. Information Systems',
+            duration: '2 Years',
+            description: 'Advanced graduate program focusing on strategic IT management and enterprise systems.'
+        }
+    ],
+    expertise: [
+        { title: 'Database Management', description: 'Design and administration of enterprise databases' },
+        { title: 'Systems Analysis', description: 'Business process analysis and system design' },
+        { title: 'Web Development', description: 'Modern web applications and services' },
+        { title: 'Data Analytics', description: 'Business intelligence and data science' },
+        { title: 'Cybersecurity', description: 'Information security and risk management' },
+        { title: 'Project Management', description: 'IT project planning and execution' }
+    ]
 };
 
 // State management
@@ -34,23 +101,32 @@ const state = {
 // Utility Functions
 const utils = {
     /**
-     * Show loading state for an element
-     * @param {HTMLElement} element - Element to show loading state
+     * Hide loading spinner immediately
      */
-    showLoading(element) {
-        if (element) {
-            element.classList.add('loading');
-            element.innerHTML = '<div class="loading-spinner">Loading...</div>';
+    hideLoading() {
+        if (elements.loadingSpinner) {
+            elements.loadingSpinner.style.display = 'none';
+            elements.loadingSpinner.setAttribute('aria-hidden', 'true');
         }
     },
 
     /**
-     * Hide loading state for an element
-     * @param {HTMLElement} element - Element to hide loading state
+     * Show main content
      */
-    hideLoading(element) {
-        if (element) {
-            element.classList.remove('loading');
+    showContent() {
+        if (elements.mainContent) {
+            elements.mainContent.style.display = 'block';
+            elements.mainContent.style.visibility = 'visible';
+            elements.mainContent.style.opacity = '1';
+        }
+    },
+
+    /**
+     * Hide error message
+     */
+    hideError() {
+        if (elements.errorMessage) {
+            elements.errorMessage.style.display = 'none';
         }
     },
 
@@ -233,6 +309,113 @@ const api = {
 // Content Rendering Functions
 const renderer = {
     /**
+     * Render hero stats
+     */
+    renderHeroStats() {
+        if (!elements.heroStats) return;
+        
+        elements.heroStats.innerHTML = staticData.stats.map(stat => `
+            <div class="hero-stat">
+                <span class="hero-stat-number">${stat.number}</span>
+                <span class="hero-stat-label">${stat.label}</span>
+            </div>
+        `).join('');
+    },
+
+    /**
+     * Render department info
+     */
+    renderDepartmentInfo() {
+        if (!elements.deptInfoGrid) return;
+        
+        elements.deptInfoGrid.innerHTML = staticData.departmentInfo.map(info => `
+            <div class="info-card">
+                <h3>${info.title}</h3>
+                <p>${info.content}</p>
+            </div>
+        `).join('');
+    },
+
+    /**
+     * Render mission and vision cards
+     */
+    renderMissionVision() {
+        const missionCard = document.querySelector('.mission-card');
+        const visionCard = document.querySelector('.vision-card');
+        
+        if (missionCard) {
+            missionCard.innerHTML = `
+                <div class="card-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h2>Our Mission</h2>
+                <p>To provide world-class education in Information Systems, fostering innovation and excellence in the digital transformation of business and society.</p>
+            `;
+        }
+        
+        if (visionCard) {
+            visionCard.innerHTML = `
+                <div class="card-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h2>Our Vision</h2>
+                <p>To be a leading department in Information Systems education, research, and innovation in Nigeria and beyond.</p>
+            `;
+        }
+    },
+
+    /**
+     * Render objectives
+     */
+    renderObjectives() {
+        if (!elements.objectivesGrid) return;
+        
+        elements.objectivesGrid.innerHTML = staticData.objectives.map(obj => `
+            <div class="objective-card">
+                <i class="${obj.icon}"></i>
+                <h3>${obj.title}</h3>
+                <p>${obj.description}</p>
+            </div>
+        `).join('');
+    },
+
+    /**
+     * Render programs
+     */
+    renderPrograms() {
+        if (!elements.programsGrid) return;
+        
+        elements.programsGrid.innerHTML = staticData.programs.map(program => `
+            <div class="program-card">
+                <div class="program-header">
+                    <h3>${program.title}</h3>
+                    <span class="program-degree">${program.degree}</span>
+                </div>
+                <div class="program-content">
+                    <div class="program-duration">
+                        <i class="fas fa-clock"></i> Duration: ${program.duration}
+                    </div>
+                    <div class="program-description">${program.description}</div>
+                </div>
+            </div>
+        `).join('');
+    },
+
+    /**
+     * Render expertise areas
+     */
+    renderExpertise() {
+        if (!elements.expertiseGrid) return;
+        
+        elements.expertiseGrid.innerHTML = staticData.expertise.map(area => `
+            <div class="expertise-item">
+                <h4>${area.title}</h4>
+                <p>${area.description}</p>
+            </div>
+        `).join('');
+    },
+
+    /**
      * Render statistics with animation
      * @param {Object} stats - Statistics data
      */
@@ -322,7 +505,9 @@ const handlers = {
         if (elements.mobileMenuBtn && elements.mainNav) {
             elements.mobileMenuBtn.addEventListener('click', () => {
                 elements.mainNav.classList.toggle('active');
-                document.body.style.overflow = elements.mainNav.classList.contains('active') ? 'hidden' : '';
+                const isActive = elements.mainNav.classList.contains('active');
+                elements.mobileMenuBtn.setAttribute('aria-expanded', isActive);
+                document.body.style.overflow = isActive ? 'hidden' : '';
             });
         }
     },
@@ -336,9 +521,43 @@ const handlers = {
                 !e.target.closest('.main-nav') &&
                 !e.target.closest('.mobile-menu-btn')) {
                 elements.mainNav.classList.remove('active');
+                elements.mobileMenuBtn?.setAttribute('aria-expanded', 'false');
                 document.body.style.overflow = '';
             }
         });
+    },
+
+    /**
+     * Handle authentication display
+     */
+    handleAuth() {
+        const user = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+        
+        if (elements.authLinks) {
+            if (user && token) {
+                // User is logged in
+                elements.authLinks.innerHTML = `
+                    <span>Welcome back!</span>
+                    <a href="#" class="btn btn-danger" id="logoutBtn">Logout</a>
+                `;
+                
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('token');
+                        window.location.href = '/';
+                    });
+                }
+            } else {
+                // User not logged in
+                elements.authLinks.innerHTML = `
+                    <a href="/pages/login.html" class="btn btn-outline">Student Login</a>
+                `;
+            }
+        }
     },
 
     /**
@@ -369,6 +588,7 @@ async function init() {
         handlers.handleMobileMenu();
         handlers.handleOutsideClick();
         handlers.handleSmoothScroll();
+        handlers.handleAuth();
 
         // Load data concurrently
         const [aboutData, statsData, facultyData] = await Promise.all([
@@ -386,6 +606,12 @@ async function init() {
         renderer.updateAboutContent(aboutData);
         renderer.renderStats(statsData);
         renderer.renderFaculty(facultyData);
+        renderer.renderHeroStats();
+        renderer.renderDepartmentInfo();
+        renderer.renderMissionVision();
+        renderer.renderObjectives();
+        renderer.renderPrograms();
+        renderer.renderExpertise();
 
         console.log('About page initialized successfully');
     } catch (error) {
@@ -405,15 +631,28 @@ async function init() {
         }
     } finally {
         state.isLoading = false;
+        utils.hideLoading();
+        utils.showContent();
     }
 }
+
+// Force immediate initialization
+utils.hideLoading();
+utils.showContent();
 
 // Initialize when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
+    // DOM is already loaded, initialize immediately
     init();
 }
+
+// Fallback - force hide loading after 100ms regardless
+setTimeout(() => {
+    utils.hideLoading();
+    utils.showContent();
+}, 100);
 
 // Export for potential use in other modules
 window.AboutPage = {
