@@ -72,6 +72,29 @@ const createTables = () => {
                 createdBy INTEGER,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (createdBy) REFERENCES users(id)
+            )`,
+
+            // Create news table
+            `CREATE TABLE IF NOT EXISTS news (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                excerpt TEXT,
+                content TEXT,
+                imageUrl TEXT,
+                date TEXT NOT NULL,
+                author TEXT,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+            )`,
+
+            // Create achievements table  
+            `CREATE TABLE IF NOT EXISTS achievements (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                description TEXT,
+                icon TEXT DEFAULT 'trophy',
+                link TEXT,
+                date TEXT NOT NULL,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             )`
         ];
 
