@@ -119,7 +119,7 @@ body {
 }
 
 .logo span {
-    color: var(--success-green);
+    color: var(--dark-gray);
 }
 
 .logo-subtitle {
