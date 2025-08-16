@@ -700,4 +700,50 @@ router.get('/materials', async (req, res) => {
     }
 });
 
+// Get news articles
+router.get('/api/news', (req, res) => {
+    try {
+        const query = `
+            SELECT id, title, excerpt, content, imageUrl, date, author
+            FROM news 
+            ORDER BY date DESC 
+            LIMIT 10
+        `;
+        
+        db.all(query, [], (err, rows) => {
+            if (err) {
+                console.error('Error fetching news:', err);
+                return res.status(500).json({ error: 'Failed to fetch news' });
+            }
+            res.json(rows || []);
+        });
+    } catch (error) {
+        console.error('Error in /api/news:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// Get student achievements
+router.get('/api/achievements', (req, res) => {
+    try {
+        const query = `
+            SELECT id, title, description, icon, link, date
+            FROM achievements 
+            ORDER BY date DESC 
+            LIMIT 6
+        `;
+        
+        db.all(query, [], (err, rows) => {
+            if (err) {
+                console.error('Error fetching achievements:', err);
+                return res.status(500).json({ error: 'Failed to fetch achievements' });
+            }
+            res.json(rows || []);
+        });
+    } catch (error) {
+        console.error('Error in /api/achievements:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router;
