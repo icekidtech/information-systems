@@ -5,6 +5,7 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
+const db = require('./db'); // Add this import at the top
 const router = express.Router();
 
 // Configure multer for file uploads
@@ -148,108 +149,251 @@ router.get('/about', async (req, res) => {
     }
 });
 
-// Courses Information API
+// Courses Information API (without database dependency)
 router.get('/courses', async (req, res) => {
     try {
-        const db = req.app.get('db');
-        
-        // Get course materials count by course
-        const materialsCount = await new Promise((resolve, reject) => {
-            db.all(`SELECT courseTitle, COUNT(*) as materialCount 
-                    FROM materials 
-                    GROUP BY courseTitle 
-                    ORDER BY courseTitle`, [], (err, rows) => {
-                if (err) reject(err);
-                else resolve(rows);
-            });
-        });
-
+        // Return static course data without database queries
         const coursesData = {
-            programs: {
+            curriculum: {
                 undergraduate: {
                     title: "Bachelor of Science in Information Systems",
                     duration: "4 years",
-                    levels: {
+                    courses: {
                         "100": [
-                            { code: "COS101", title: "Introduction to Computing", units: 3, type: "core" },
-                            { code: "COS102", title: "Problem Solving and Programming", units: 3, type: "core" },
-                            { code: "MTH101", title: "Elementary Mathematics I", units: 3, type: "core" },
-                            { code: "MTH102", title: "Elementary Mathematics II", units: 3, type: "core" },
-                            { code: "GST101", title: "Use of English", units: 2, type: "gst" },
-                            { code: "GST102", title: "Nigerian Peoples and Culture", units: 2, type: "gst" }
+                            { 
+                                id: 1,
+                                code: "COS101", 
+                                title: "Introduction to Computing", 
+                                units: 3, 
+                                type: "core",
+                                description: "Fundamentals of computer systems and basic programming concepts.",
+                                materials: 0
+                            },
+                            { 
+                                id: 2,
+                                code: "COS102", 
+                                title: "Problem Solving and Programming", 
+                                units: 3, 
+                                type: "core",
+                                description: "Introduction to problem-solving techniques and programming fundamentals.",
+                                materials: 0
+                            },
+                            { 
+                                id: 3,
+                                code: "MTH101", 
+                                title: "Elementary Mathematics I", 
+                                units: 3, 
+                                type: "core",
+                                description: "Basic mathematical concepts for computing students.",
+                                materials: 0
+                            },
+                            { 
+                                id: 4,
+                                code: "MTH102", 
+                                title: "Elementary Mathematics II", 
+                                units: 3, 
+                                type: "core",
+                                description: "Advanced mathematical concepts for computing students.",
+                                materials: 0
+                            },
+                            { 
+                                id: 5,
+                                code: "GST101", 
+                                title: "Use of English", 
+                                units: 2, 
+                                type: "gst",
+                                description: "English language skills for academic and professional communication.",
+                                materials: 0
+                            },
+                            { 
+                                id: 6,
+                                code: "GST102", 
+                                title: "Nigerian Peoples and Culture", 
+                                units: 2, 
+                                type: "gst",
+                                description: "Study of Nigerian culture, history, and social systems.",
+                                materials: 0
+                            }
                         ],
                         "200": [
-                            { code: "INS201", title: "Systems Analysis and Design", units: 3, type: "core" },
-                            { code: "INS202", title: "Database Management Systems", units: 3, type: "core" },
-                            { code: "INS203", title: "Business Process Modeling", units: 3, type: "core" },
-                            { code: "COS201", title: "Data Structures and Algorithms", units: 3, type: "core" },
-                            { code: "MTH201", title: "Mathematical Methods", units: 3, type: "core" },
-                            { code: "STA201", title: "Statistics for Computing", units: 3, type: "core" }
+                            { 
+                                id: 7,
+                                code: "INS201", 
+                                title: "Systems Analysis and Design", 
+                                units: 3, 
+                                type: "core",
+                                description: "Methodologies for analyzing and designing information systems.",
+                                materials: 0
+                            },
+                            { 
+                                id: 8,
+                                code: "INS202", 
+                                title: "Database Management Systems", 
+                                units: 3, 
+                                type: "core",
+                                description: "Design and implementation of database systems.",
+                                materials: 0
+                            },
+                            { 
+                                id: 9,
+                                code: "INS203", 
+                                title: "Business Process Modeling", 
+                                units: 3, 
+                                type: "core",
+                                description: "Techniques for modeling and optimizing business processes.",
+                                materials: 0
+                            },
+                            { 
+                                id: 10,
+                                code: "COS201", 
+                                title: "Data Structures and Algorithms", 
+                                units: 3, 
+                                type: "core",
+                                description: "Fundamental data structures and algorithmic problem solving.",
+                                materials: 0
+                            },
+                            { 
+                                id: 11,
+                                code: "MTH201", 
+                                title: "Mathematical Methods", 
+                                units: 3, 
+                                type: "core",
+                                description: "Advanced mathematical methods for computer science.",
+                                materials: 0
+                            },
+                            { 
+                                id: 12,
+                                code: "STA201", 
+                                title: "Statistics for Computing", 
+                                units: 3, 
+                                type: "core",
+                                description: "Statistical methods and their applications in computing.",
+                                materials: 0
+                            }
                         ],
                         "300": [
-                            { code: "INS301", title: "Enterprise Resource Planning", units: 3, type: "core" },
-                            { code: "INS302", title: "Information Security", units: 3, type: "core" },
-                            { code: "INS303", title: "Web Technologies", units: 3, type: "core" },
-                            { code: "INS304", title: "Data Analytics", units: 3, type: "core" },
-                            { code: "INS305", title: "Project Management", units: 3, type: "elective" },
-                            { code: "INS306", title: "Mobile Application Development", units: 3, type: "elective" }
+                            { 
+                                id: 13,
+                                code: "INS301", 
+                                title: "Enterprise Resource Planning", 
+                                units: 3, 
+                                type: "core",
+                                description: "Implementation and management of ERP systems.",
+                                materials: 0
+                            },
+                            { 
+                                id: 14,
+                                code: "INS302", 
+                                title: "Information Security", 
+                                units: 3, 
+                                type: "core",
+                                description: "Principles and practices of information security.",
+                                materials: 0
+                            },
+                            { 
+                                id: 15,
+                                code: "INS303", 
+                                title: "Web Technologies", 
+                                units: 3, 
+                                type: "core",
+                                description: "Modern web development technologies and frameworks.",
+                                materials: 0
+                            },
+                            { 
+                                id: 16,
+                                code: "INS304", 
+                                title: "Data Analytics", 
+                                units: 3, 
+                                type: "core",
+                                description: "Techniques for analyzing and interpreting large datasets.",
+                                materials: 0
+                            },
+                            { 
+                                id: 17,
+                                code: "INS305", 
+                                title: "Project Management", 
+                                units: 3, 
+                                type: "elective",
+                                description: "Principles and practices of IT project management.",
+                                materials: 0
+                            },
+                            { 
+                                id: 18,
+                                code: "INS306", 
+                                title: "Mobile Application Development", 
+                                units: 3, 
+                                type: "elective",
+                                description: "Development of mobile applications for various platforms.",
+                                materials: 0
+                            }
                         ],
                         "400": [
-                            { code: "INS401", title: "Strategic Information Systems", units: 3, type: "core" },
-                            { code: "INS402", title: "Business Intelligence", units: 3, type: "core" },
-                            { code: "INS403", title: "Digital Transformation", units: 3, type: "core" },
-                            { code: "INS404", title: "Research Project", units: 6, type: "core" },
-                            { code: "INS405", title: "Emerging Technologies", units: 3, type: "elective" },
-                            { code: "INS406", title: "IT Governance", units: 3, type: "elective" }
+                            { 
+                                id: 19,
+                                code: "INS401", 
+                                title: "Strategic Information Systems", 
+                                units: 3, 
+                                type: "core",
+                                description: "Strategic role of information systems in organizations.",
+                                materials: 0
+                            },
+                            { 
+                                id: 20,
+                                code: "INS402", 
+                                title: "Business Intelligence", 
+                                units: 3, 
+                                type: "core",
+                                description: "Business intelligence systems and data warehousing.",
+                                materials: 0
+                            },
+                            { 
+                                id: 21,
+                                code: "INS403", 
+                                title: "Digital Transformation", 
+                                units: 3, 
+                                type: "core",
+                                description: "Leading digital transformation initiatives in organizations.",
+                                materials: 0
+                            },
+                            { 
+                                id: 22,
+                                code: "INS404", 
+                                title: "Research Project", 
+                                units: 6, 
+                                type: "core",
+                                description: "Independent research project in information systems.",
+                                materials: 0
+                            },
+                            { 
+                                id: 23,
+                                code: "INS405", 
+                                title: "Emerging Technologies", 
+                                units: 3, 
+                                type: "elective",
+                                description: "Study of emerging technologies and their impact.",
+                                materials: 0
+                            },
+                            { 
+                                id: 24,
+                                code: "INS406", 
+                                title: "IT Governance", 
+                                units: 3, 
+                                type: "elective",
+                                description: "Governance frameworks for IT organizations.",
+                                materials: 0
+                            }
                         ]
                     }
-                },
-                graduate: {
-                    title: "Master of Science in Information Systems",
-                    duration: "2 years",
-                    courses: [
-                        { code: "INS701", title: "Advanced Database Systems", units: 3, type: "core" },
-                        { code: "INS702", title: "Enterprise Architecture", units: 3, type: "core" },
-                        { code: "INS703", title: "Advanced Data Analytics", units: 3, type: "core" },
-                        { code: "INS704", title: "Research Methodology", units: 3, type: "core" },
-                        { code: "INS705", title: "Thesis", units: 6, type: "core" }
-                    ]
                 }
             },
             prerequisites: {
-                "100": "SSCE/WAEC with credits in Mathematics, English, and three other subjects including Physics or Chemistry",
+                "100": "SSCE/WAEC with credits in Mathematics, English, and three other subjects",
                 "200": "Successful completion of 100 level courses with minimum CGPA of 2.0",
                 "300": "Completion of prerequisite 200 level courses in relevant areas",
-                "400": "Advanced courses requiring completion of foundational courses and project proposal",
-                "Graduate": "Bachelor's degree in related field with minimum second class lower division"
+                "400": "Advanced courses requiring completion of foundational courses"
             },
-            careers: [
-                {
-                    title: "Systems Analyst",
-                    description: "Analyze and design information systems to meet business requirements"
-                },
-                {
-                    title: "Database Administrator",
-                    description: "Manage and maintain enterprise database systems"
-                },
-                {
-                    title: "IT Project Manager",
-                    description: "Lead technology projects and coordinate development teams"
-                },
-                {
-                    title: "Business Intelligence Analyst",
-                    description: "Extract insights from data to support business decisions"
-                },
-                {
-                    title: "Cybersecurity Specialist",
-                    description: "Protect organizational information and systems from threats"
-                },
-                {
-                    title: "Digital Transformation Consultant",
-                    description: "Help organizations leverage technology for competitive advantage"
-                }
-            ],
-            materialsAvailable: materialsCount
+            materialsAvailable: 0,
+            totalCourses: 24
         };
 
         res.json(coursesData);
@@ -700,49 +844,43 @@ router.get('/materials', async (req, res) => {
     }
 });
 
-// Get news articles
-router.get('/api/news', (req, res) => {
+// Get news articles (for homepage)
+router.get('/news', (req, res) => {
     try {
-        const query = `
-            SELECT id, title, excerpt, content, imageUrl, date, author
-            FROM news 
-            ORDER BY date DESC 
-            LIMIT 10
-        `;
-        
-        db.all(query, [], (err, rows) => {
-            if (err) {
-                console.error('Error fetching news:', err);
-                return res.status(500).json({ error: 'Failed to fetch news' });
+        // Return mock data for now, or create news table
+        const mockNews = [
+            {
+                id: 1,
+                title: "New Semester Registration Open",
+                excerpt: "Registration for the new semester is now open for all students.",
+                date: new Date().toISOString(),
+                imageUrl: "/assets/images/news-placeholder.jpg"
             }
-            res.json(rows || []);
-        });
+        ];
+        res.json(mockNews);
     } catch (error) {
-        console.error('Error in /api/news:', error);
-        res.status(500).json({ error: 'Server error' });
+        console.error('Error fetching news:', error);
+        res.status(500).json({ error: 'Failed to fetch news' });
     }
 });
 
-// Get student achievements
-router.get('/api/achievements', (req, res) => {
+// Get student achievements (for homepage)
+router.get('/achievements', (req, res) => {
     try {
-        const query = `
-            SELECT id, title, description, icon, link, date
-            FROM achievements 
-            ORDER BY date DESC 
-            LIMIT 6
-        `;
-        
-        db.all(query, [], (err, rows) => {
-            if (err) {
-                console.error('Error fetching achievements:', err);
-                return res.status(500).json({ error: 'Failed to fetch achievements' });
+        // Return mock data for now, or create achievements table
+        const mockAchievements = [
+            {
+                id: 1,
+                title: "Dean's List Recognition",
+                description: "Outstanding academic performance by our students.",
+                icon: "trophy",
+                date: new Date().toISOString()
             }
-            res.json(rows || []);
-        });
+        ];
+        res.json(mockAchievements);
     } catch (error) {
-        console.error('Error in /api/achievements:', error);
-        res.status(500).json({ error: 'Server error' });
+        console.error('Error fetching achievements:', error);
+        res.status(500).json({ error: 'Failed to fetch achievements' });
     }
 });
 
