@@ -162,8 +162,8 @@ router.get('/courses', async (req, res) => {
                         "100": [
                             { 
                                 id: 1,
-                                code: "COS101", 
-                                title: "Introduction to Computing", 
+                                code: "COS111", 
+                                title: "Introduction to Computing Science", 
                                 units: 3, 
                                 type: "core",
                                 description: "Fundamentals of computer systems and basic programming concepts.",
