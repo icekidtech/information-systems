@@ -681,21 +681,35 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Admin login
+// Admin login - Fixed version
 router.post('/admin/login', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, regNumber, passcode } = req.body;
+    
+    // Support both username/password and regNumber/passcode formats
+    const loginField = username || regNumber;
+    const passwordField = password || passcode;
 
-    if (!username || !password) {
-        return res.status(400).json({ error: 'Username and password are required' });
+    if (!loginField || !passwordField) {
+        return res.status(400).json({ error: 'Login credentials are required' });
     }
 
     try {
-        const db = req.app.get('db');
+        // Check if db is properly imported
+        if (!db || typeof db.get !== 'function') {
+            console.error('Database not properly initialized');
+            return res.status(500).json({ error: 'Database connection error' });
+        }
         
         const admin = await new Promise((resolve, reject) => {
-            db.get('SELECT * FROM admins WHERE username = ?', [username], (err, row) => {
-                if (err) reject(err);
-                else resolve(row);
+            // Check both username and regNumber fields for admin login
+            db.get('SELECT * FROM admins WHERE username = ? OR regNumber = ?', 
+                [loginField, loginField], (err, row) => {
+                if (err) {
+                    console.error('Database error:', err);
+                    reject(err);
+                } else {
+                    resolve(row);
+                }
             });
         });
 
@@ -703,13 +717,23 @@ router.post('/admin/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        const isValidPassword = await bcrypt.compare(password, admin.password);
+        // Check password - handle both hashed and plain text passwords
+        let isValidPassword = false;
+        
+        if (admin.password.startsWith('$2b$') || admin.password.startsWith('$2a$')) {
+            // Hashed password
+            isValidPassword = await bcrypt.compare(passwordField, admin.password);
+        } else {
+            // Plain text password (for initial setup)
+            isValidPassword = admin.password === passwordField;
+        }
+
         if (!isValidPassword) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
         const token = jwt.sign(
-            { id: admin.id, username: admin.username, role: 'admin' },
+            { id: admin.id, username: admin.username || admin.regNumber, role: 'admin' },
             JWT_SECRET,
             { expiresIn: '24h' }
         );
@@ -719,7 +743,7 @@ router.post('/admin/login', async (req, res) => {
             token,
             user: {
                 id: admin.id,
-                username: admin.username,
+                username: admin.username || admin.regNumber,
                 role: 'admin'
             }
         });
