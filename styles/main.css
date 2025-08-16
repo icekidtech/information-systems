@@ -197,7 +197,7 @@ ul {
 
 .btn-secondary {
     background-color: var(--secondary-color);
-    color: var(--white);
+    color: #f8f9fa;
     border-color: var(--secondary-color);
 }
 
